@@ -1,25 +1,4287 @@
-<!DOCTYPE html>
-<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101a21"><title>升官等｜口袋題庫</title>
-<style>
-:root{--bg:#101a21;--panel:#18262f;--panel2:#21323c;--line:#344650;--text:#e7edf0;--muted:#9aabb5;--accent:#a9c47c;--gold:#d8bd78;--danger:#e38a83}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2b35 0,#101a21 55%);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.app{max-width:740px;margin:auto;padding:20px 16px 110px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.brand{letter-spacing:.14em;font-weight:800;font-size:14px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.2em;font-weight:500;margin-top:3px}.pill{border:1px solid var(--line);color:var(--accent);border-radius:99px;padding:5px 10px;font-size:12px}.hero{padding:22px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(140deg,#233742,#17242c);box-shadow:0 15px 40px #0002}.eyebrow{font-size:11px;letter-spacing:.16em;color:var(--accent);font-weight:700}.hero h1{font-size:26px;margin:6px 0 2px}.hero p{margin:0;color:var(--muted);font-size:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px}.stat span{display:block;color:var(--muted);font-size:12px}.stat b{font-size:22px}.card{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}.cardhead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.topic{color:var(--gold)}.question{font-size:18px;font-weight:650;margin:18px 0}.options{display:grid;gap:9px}.opt{width:100%;text-align:left;color:var(--text);background:#1d2c35;border:1px solid #354751;border-radius:12px;padding:13px;font:inherit;cursor:pointer}.opt:hover{border-color:var(--accent)}.opt.correct{border-color:#9ac27c;background:#263a30}.opt.wrong{border-color:var(--danger);background:#3a292a}.opt:disabled{cursor:default}.reveal{display:none;margin-top:14px;border-radius:13px;background:#23352f;border:1px solid #4b6653;padding:14px}.reveal.show{display:block}.answerline{color:var(--accent);font-weight:750}.explain{font-size:14px;color:#c5d1d4;margin-top:6px}.actions{display:flex;gap:9px;margin-top:16px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:12px 14px;border-radius:12px;font:inherit;cursor:pointer}.btn.primary{background:var(--accent);border-color:var(--accent);color:#142019;font-weight:800;flex:1}.toolbar{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.sectiontitle{margin:25px 2px 10px;font-size:14px;letter-spacing:.08em;color:var(--muted)}.notice{color:var(--muted);font-size:12px;margin:14px 3px}.nav{position:fixed;bottom:0;left:0;right:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:#101a21ee;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:8px}.nav button{max-width:180px;flex:1}input[type=file]{display:none}
-</style></head><body><main class="app"><header class="top"><div class="brand">FIELD STUDY<small>POLICE PROMOTION · 113 ADMINISTRATIVE LAW · 50 CARDS</small></div><span class="pill">個人備考</span></header>
-<section class="hero"><div class="eyebrow">MICRO-LEARNING</div><h1>有空，讀一題。</h1><p>低強度累積 · 不追進度 · 隨手複習</p></section>
-<section class="stats"><div class="stat"><span>已答題</span><b id="seen">0</b></div><div class="stat"><span>收藏</span><b id="saved">0</b></div><div class="stat"><span>錯題待複習</span><b id="wrong">0</b></div></section>
-<div class="sectiontitle">DAILY CARD / 今日卡片</div><section class="card"><div class="cardhead"><span id="qid">題庫載入</span><span class="topic" id="topic">主題</span></div><div class="question" id="question"></div><div class="options" id="options"></div><div class="reveal" id="reveal"><div class="answerline" id="answer"></div><div class="explain" id="explain"></div><div class="explain" id="detail" style="margin-top:10px;white-space:pre-wrap"></div></div><div class="actions"><button class="btn" id="fav">☆ 收藏</button><button class="btn" id="wrongBtn">標記錯題</button><button class="btn primary" id="next">下一題 ↗</button></div></section>
-<div class="toolbar"><button class="btn" id="random">⤨ 隨機抽題</button><button class="btn" id="all">題庫統計</button><button class="btn" id="import">匯入 CSV</button><input type="file" id="file" accept=".csv,text/csv"></div><p class="notice" id="info">已整理 113 年行政法 50 題與逐題考點解析。解析為學習整理，非官方解答；法規適用以最新法令及官方更正為準。作答紀錄保存在本裝置瀏覽器。</p><p class="notice">原始資料：<a style="color:#a9c47c" target="_blank" rel="noopener" href="https://wwwq.moex.gov.tw/exam/wHandExamQandA_File.ashx?t=Q&amp;code=113170&amp;c=101&amp;s=0202&amp;q=1">考題 PDF</a>　<a style="color:#a9c47c" target="_blank" rel="noopener" href="https://wwwq.moex.gov.tw/exam/wHandExamQandA_File.ashx?t=M&amp;code=113170&amp;c=101&amp;s=0202&amp;q=1">官方答案 PDF</a>　<a style="color:#a9c47c" target="_blank" rel="noopener" href="https://kaonow.com/paper/policepromo-8b7f1efc-moex-113-3082b5f1/">試題彙整頁</a></p></main><footer class="nav"><button class="btn" id="review">錯題複習</button><button class="btn" id="favorites">收藏卡片</button><button class="btn" id="reset">重置進度</button></footer>
-<script>
-const demo=[{"id":"113-行政法-01","year":"113","subject":"行政法","tag":"行政法","q":"有關無效行政處分，下列敘述何者正確？","opts":["自始不生效力，但例外時得使其向將來失效","行政機關得依職權向法院提起無效確認之訴","利害關係人有正當理由得請求確認無效與否","無效行政處分未經撤銷者，其效力繼續存在"],"a":3,"ex":"行政處分無效之確認：利害關係人有正當理由時，得請求確認。","detail":"行政程序法第111條規範無效事由；無效處分自始不生效力。依第113條，利害關係人有正當理由得請求確認無效，並非由行政機關向法院提起確認之訴。"},{"id":"113-行政法-02","year":"113","subject":"行政法","tag":"行政法","q":"依我國司法實務見解，下列何者係屬行政處分？","opts":["行政院依地方制度法認定地方議會通過自治條例為無效之函告","經認定為違建後，行政機關通知人民應自行拆除之日期通知單","學校性平會就校園性騷擾事件，所作成之調查報告及處理建議","人民違反道路交通管理處罰條例，由交通勤務警察所為之舉發"],"a":1,"ex":"行政處分須為行政機關就公法上具體事件所為、對外直接發生法律效果之單方行政行為。","detail":"行政處分須由行政機關就公法上具體事件所為，並對外直接發生法律效果。地方自治條例被宣告無效的函告具有直接法律效果，與單純通知、調查報告或警察舉發等行為須依其性質區辨。"},{"id":"113-行政法-03","year":"113","subject":"行政法","tag":"行政法","q":"依工會法施行細則規定，廠場工作場所之獨立人事、預算及會計要件，依憲法法庭判決意旨，牴觸下列何種原則？","opts":["比例原則","平等原則","法律保留原則","正當法律程序原則"],"a":3,"ex":"本題考憲法法庭對工會組織及法律保留的判斷。","detail":"本題考法律保留：限制工會組織及團結權的重要構成要件，應由法律或有明確授權的法規命令規定；施行細則不得自行增加法律未授權的實質限制。"},{"id":"113-行政法-04","year":"113","subject":"行政法","tag":"行政法","q":"依行政訴訟法，有關行政訴訟之和解，下列敘述何者錯誤？","opts":["和解成立者，有確定力","當事人須就訴訟標的具有處分權","和解之範圍，限於與訴訟標的相關之事項","和解有得撤銷之原因者，當事人得請求繼續審判"],"a":3,"ex":"行政訴訟和解成立具有確定力；撤銷和解有特別救濟規定。","detail":"行政訴訟法上的和解具有確定判決效力，並非僅限於訴訟標的本身；與訴訟標的相關且當事人有處分權的事項，也可能納入和解。和解有法定無效或得撤銷原因時，依特別程序救濟。"},{"id":"113-行政法-05","year":"113","subject":"行政法","tag":"行政法","q":"下列何種程序屬訴願先行程序之性質？","opts":["公務人員保障法之復審程序","政府採購法之異議程序","教師法之再申訴程序","公務人員保障法之再申訴程序"],"a":2,"ex":"政府採購異議屬於先行救濟程序的典型考點。","detail":"政府採購法異議、申訴是採購爭議的法定先行救濟程序；須依採購法規定先向招標機關提出異議，必要時再向採購申訴審議委員會申訴，與一般訴願程序不同。"},{"id":"113-行政法-06","year":"113","subject":"行政法","tag":"行政法","q":"下列何者不是行政事實行為？","opts":["氣象報告之颱風預測","快速道路之施工行為","街道門牌之更名編定","地方政府之垃圾清運"],"a":3,"ex":"門牌更名編定會直接形成法律效果，與單純事實行為不同。","detail":"行政事實行為原則上不直接形成法律效果，例如施工、清運、氣象資訊。門牌更名編定會確定地址識別，影響人民權利義務及法律關係，具有行政處分性質。"},{"id":"113-行政法-07","year":"113","subject":"行政法","tag":"行政法","q":"下列何種行為，並非行政程序法第92條所稱之行政處分？","opts":["匝道管制","建築線之指定","提供產業發展資訊","水源保護區之公告"],"a":3,"ex":"單純提供資訊通常不直接發生法律效果，非行政處分。","detail":"行政處分要有對外直接法律效果。單純提供產業資訊屬事實通知或資訊提供，通常不直接設定、變更或消滅人民公法上權利義務，因此不是行政程序法第92條的行政處分。"},{"id":"113-行政法-08","year":"113","subject":"行政法","tag":"行政法","q":"有關公共設施委託民間團體管理時，其國家賠償責任之成立與責任歸屬問題，下列敘述何者正確？","opts":["由受委託民間團體自負國賠責任","就損害原因有應負責任之人時，由受損害人民對其主張國賠責任","於開放水域，民間團體已適當警告而人民仍從事危險活動，國家不負國賠責任","於開放山域設施已適當警告而人民仍冒險，國家不負國賠責任"],"a":3,"ex":"公共設施委託管理及開放水域、山域的國賠責任有特別規範。","detail":"公共設施委託民間管理時，國家賠償責任不當然因委託而消失；仍須依國家賠償法及公共設施管理規範判斷。開放水域如已適當警告，而人民仍從事具高度危險活動，法律設有責任減免的特別規定。"},{"id":"113-行政法-09","year":"113","subject":"行政法","tag":"行政法","q":"下列何者並不屬於有關公物一般使用之設定？","opts":["因消防隊救火需要而排除私人路障","將私人所有之老宅指定為歷史古蹟","因應交通尖峰時段所為之調撥車道","將私人加油站所設廁所指定為公廁"],"a":1,"ex":"公物一般使用設定與排除障礙、古蹟指定等概念需區辨。","detail":"公物一般使用是人民依公物目的通常使用。消防救火時排除私人路障，是排除妨害、執行公權力的事實措施，不是設定公物一般使用；指定古蹟、公廁等則涉及特定公物或公共使用關係。"},{"id":"113-行政法-10","year":"113","subject":"行政法","tag":"行政法","q":"下列何者為行政處分？","opts":["聽證程序主持人對於當事人聲明異議所為之駁回","行政機關基於職權對特定當事人依法所為之送達","行政機關進行權限委託時向其他機關所為之委託","土地主管機關就不動產交易標的物所為之登記"],"a":4,"ex":"不動產登記的法律性質須依其具體法規及效果判斷。","detail":"不動產登記不是單純內部作業；登記機關依法律審查並作成登記，會發生公法上的法律效果。判斷行政處分應看是否對外直接發生法律效果，而非名稱是否為通知或登記。"},{"id":"113-行政法-11","year":"113","subject":"行政法","tag":"行政法","q":"有關公營造物利用關係之敘述，下列何者錯誤？","opts":["其利用關係，得基於營造物利用規則而生","其利用型態，得為公法利用關係或私法利用關係","基於對內有家主權，而得排除檢調或司法人員之進入","其利用型態，基本上由法規或公營造物主體裁量定之"],"a":1,"ex":"公營造物管理權並非可概括排除檢調或司法機關依法執行職務。","detail":"公營造物管理者得依利用規則維持秩序，但所謂家主權不是無限制的排除權。檢察、司法或警察機關依法執行職務時，管理者不得僅以內部管理權概括拒絕。"},{"id":"113-行政法-12","year":"113","subject":"行政法","tag":"行政法","q":"有關行政罰與管制性不利處分之比較，下列敘述何者錯誤？","opts":["管制性不利處分不受裁罰權時效之限制","只有裁罰性不利處分適用處罰法定原則","相對於行政罰，管制性不利處分對人民權利影響較輕微","機關對裁罰性不利處分應依行為受責難程度、所生影響及不法利得決定"],"a":1,"ex":"行政罰與管制性不利處分的目的、要件及法律原則應分別判斷。","detail":"行政罰是對過去違反行政法義務行為的制裁；管制性不利處分則以預防危險、回復合法狀態為目的。管制措施未必比行政罰對權利影響輕微，仍須依法律保留、比例原則等審查。"},{"id":"113-行政法-13","year":"113","subject":"行政法","tag":"行政法","q":"依行政罰法規定與我國學理，法律或自治條例均可作為處罰依據。下列相關敘述何者錯誤？","opts":["法律包括符合授權明確性原則之法規命令","自治條例不包括職業團體內部之自治規章","法律不包括具有間接對外效力之行政規則","自治條例包括與大學自治相關之自治規章"],"a":2,"ex":"本題考處罰法定及法律、自治條例的規範範圍。","detail":"行政罰法第4條要求處罰須有法律或自治條例依據；授權明確的法規命令得在授權範圍內具體化處罰規定。職業團體或大學自治規章不當然等同自治條例，不能任意擴張處罰法源。"},{"id":"113-行政法-14","year":"113","subject":"行政法","tag":"行政法","q":"有關公務員責任之敘述，下列何者正確？","opts":["行政懲處與司法懲戒併行制度違憲","同一行為，不受懲戒法院二次懲戒","對懲戒法庭判決不服者，得另向行政法院起訴","對政務官嚴重違法失職行為，得予以行政懲處"],"a":2,"ex":"公務員懲戒與行政懲處的競合及一事不再理是本題核心。","detail":"行政懲處與司法懲戒的性質、目的及法定程序不同，制度上得有一定程度併行。不能把『同一行為不得二次懲戒』誤解為所有行政懲處與司法懲戒一律不得併存；本題要辨明懲戒法院的法定權限與救濟。"},{"id":"113-行政法-15","year":"113","subject":"行政法","tag":"行政法","q":"依政府資訊公開法，有關政府資訊應否公開之敘述，下列何者錯誤？","opts":["政府機關以預算補助特定企業之補助金等資訊，應主動公開","牽涉國防預算且依法核定為國家機密者，得不主動公開","書面公共工程及採購契約應主動公開","合議制機關之會議紀錄應主動公開"],"a":2,"ex":"官方備註：本題答 B 或 D 均給分。","detail":"政府資訊公開法第6條等規定要求主動公開特定資訊，但國家機密、個人隱私及合議制機關會議紀錄等另有例外或限制。本題官方公告 B、D 均給分，複習時以官方更正為準，不宜只背單一選項。"},{"id":"113-行政法-16","year":"113","subject":"行政法","tag":"行政法","q":"甲因配合店家宣傳改名，後悔欲申請改名，主管機關認為符合姓名條例所稱「特殊原因」。此處「特殊原因」屬於何種行政法概念？","opts":["判斷餘地","裁量餘地","裁量基準","不確定法律概念"],"a":4,"ex":"不確定法律概念是法律要件用語需經解釋、涵攝的概念。","detail":"『特殊原因』是法律構成要件中的不確定法律概念，須先解釋其意義，再將個案事實涵攝其中；不是行政機關在數個合法方案間自由選擇的裁量權。"},{"id":"113-行政法-17","year":"113","subject":"行政法","tag":"行政法","q":"有關行政處分與行政契約之比較，下列敘述何者正確？","opts":["基於契約相對性，行政契約無從產生對第三人拘束效力","信賴保護原則適用對象包括行政處分與行政契約之相對人","具有對第三人效力之行政處分，其效力發生繫於第三人事前同意","行政契約或行政處分對第三人效力均以法規明定為前提"],"a":2,"ex":"信賴保護原則可適用於行政處分及行政契約的相對人。","detail":"信賴保護不只可能出現在授益行政處分，也可能適用於行政契約相對人。行政契約仍受誠信、平等及依法行政等公法原則拘束，不能因契約形式就排除信賴保護。"},{"id":"113-行政法-18","year":"113","subject":"行政法","tag":"行政法","q":"行政機關於颱風期間為避免緊急危險，引水進入尚未完工之分洪隧道，應屬何種行政措施？","opts":["定暫時狀態之假處分","維護人民生命財產之保全處分","防止損害擴大之暫時性行政處分","行政執行法上之即時強制"],"a":4,"ex":"即時強制是為排除現在急迫危險而採取的即時措施。","detail":"行政執行法第36條以下的即時強制，是為排除現在急迫危害，於必要時即時對人或物採取措施；不以先作成行政處分或完成一般執行程序為必要，但仍受必要性及比例原則限制。"},{"id":"113-行政法-19","year":"113","subject":"行政法","tag":"行政法","q":"下列何者為具有法效性之單方行政行為？","opts":["具對第三人效力之行政處分","具間接對外效力之行政指導","不須第三人同意之行政契約","具可代替性之行政事實行為"],"a":1,"ex":"行政處分是具有法效性的單方行政行為。","detail":"行政處分是行政機關單方作成、直接發生公法效果的行政行為。行政指導通常不具法律拘束力；行政契約則以雙方合意為基礎；事實行為本身也不以法律效果為必要。"},{"id":"113-行政法-20","year":"113","subject":"行政法","tag":"行政法","q":"有關行政罰之敘述，下列何者正確？","opts":["裁罰性不利處分亦包括強制拆除","警告性處分只是單純警告，並不屬於行政罰","行為後法律有變更者，適用最初行為時之法律","公布違法者姓名影響權益輕微，無須適用法律保留原則"],"a":1,"ex":"警告性處分是否屬行政罰，須依其是否具裁罰性判斷。","detail":"行政罰須具有裁罰性。強制拆除若目的在排除違法狀態、回復合法秩序，通常屬管制或行政執行措施，不因對人民不利就當然是行政罰；仍應依措施目的及法律性質判斷。"},{"id":"113-行政法-21","year":"113","subject":"行政法","tag":"行政法","q":"關於行政契約，下列敘述何者正確？","opts":["行政契約屬公法契約，故不得準用民法規定","契約締結後如有情事重大變更，當事人一方得依法終止契約","準用民法結果雖為無效，但依行政程序法並不當然無效","如無自願接受執行約定，得準用民事訴訟法強制執行規定"],"a":2,"ex":"行政程序法對情事重大變更設有調整或終止契約的規範。","detail":"行政程序法第147條處理行政契約成立後情事重大變更：若依原約定顯失公平，當事人得請求調整或終止。行政契約並非完全排除民法規定，法律也設有準用規則。"},{"id":"113-行政法-22","year":"113","subject":"行政法","tag":"行政法","q":"有關行政契約與行政法一般原則之敘述，下列何者正確？","opts":["行政契約設定公法關係，不適用法律優位原則","基於私法自治原則授權，公法關係得以行政契約設定、變更或消滅","不得締結行政契約者，其契約約款仍應適用比例原則","以甄選方式決定當事人，事先公告資格係落實正當法律程序原則"],"a":4,"ex":"行政契約仍受依法行政等一般原則拘束；甄選公告涉及程序正當性。","detail":"行政契約雖以合意成立，仍受法律優位、法律保留、比例及正當程序等公法原則拘束。以甄選方式選定契約相對人，事先公告資格與標準，是程序透明及公平的重要要求。"},{"id":"113-行政法-23","year":"113","subject":"行政法","tag":"行政法","q":"依行政程序法，有關人民向行政機關提出之陳情，下列敘述何者正確？","opts":["機關應組成陳情處理委員會迅速回應","言詞陳情得不作紀錄並作成暫時性保全行政處分","陳情事項屬得提起訴願、訴訟或請求國賠者，陳情人仍得依法提起","陳情有保密必要，機關仍得基於公益公開"],"a":3,"ex":"提出陳情不妨礙人民依法提起訴願、訴訟或請求國家賠償。","detail":"人民陳情不會取代法定救濟。即使機關受理陳情，若事項本來可以提起訴願、行政訴訟或請求國家賠償，人民仍須遵守各該法定要件及期間。"},{"id":"113-行政法-24","year":"113","subject":"行政法","tag":"行政法","q":"關於法規命令與行政規則之比較，下列敘述何者正確？","opts":["均得依職權舉行聽證訂定","均須先於政府公報發布","均得依人民提議訂定","均得為行政法之成文法源"],"a":4,"ex":"法規命令與行政規則的對外效力、訂定程序及法源地位不同。","detail":"行政法法源包含成文法規及一定範圍內的行政法一般原則、習慣法等。行政規則通常拘束機關內部，但可能透過平等原則、自我拘束等方式間接影響外部；須區分其直接法規效力與間接外部效果。"},{"id":"113-行政法-25","year":"113","subject":"行政法","tag":"行政法","q":"有關行政機關之授權與裁量權，下列敘述何者正確？","opts":["非授予利益之合法行政處分，得由原機關依職權裁量廢止","依法規授權私人行使公權力時，私人並得制定法規命令","行政機關締結行政契約須以法規事先明確授權為前提","機關有裁量權時，得授權私人與其他私人締結行政契約"],"a":1,"ex":"行政處分的廢止須區分授益與非授益處分及法定要件。","detail":"行政程序法第123條規範合法授益行政處分的廢止；非授益處分的撤銷、廢止須依不同條文及要件判斷。題目用語要分清『撤銷』通常針對違法處分溯及失效，『廢止』通常針對合法處分向將來失效。"},{"id":"113-行政法-26","year":"113","subject":"行政法","tag":"行政法","q":"下列何者不屬於行政處分之附款？","opts":["保留負擔之事後附加","保留負擔之事後變更","保留行政處分之廢止權","保留行政處分之撤銷權"],"a":4,"ex":"附款類型包括期限、條件、負擔、保留廢止權及保留事後附加或變更負擔等。","detail":"行政處分附款包括期限、條件、負擔、保留廢止權，以及保留事後附加或變更負擔。『保留撤銷權』不是法定附款類型；撤銷與廢止的法律原因及效力不同。"},{"id":"113-行政法-27","year":"113","subject":"行政法","tag":"行政法","q":"下列何者為行政事實行為？","opts":["警察分局長下令違法集會群眾解散","內政部訂定治安顧慮人口查訪辦法","軍事學校對學生所為退學處分","警校對新生實施入學前預備教育"],"a":4,"ex":"預備教育屬實際執行活動，通常為行政事實行為。","detail":"行政事實行為是行政機關實際執行活動，通常不直接發生法律效果。警校對新生實施入學前預備教育是實際教育訓練；退學處分、命令解散及訂定法規則各有不同法律性質。"},{"id":"113-行政法-28","year":"113","subject":"行政法","tag":"行政法","q":"下列何者係以高等行政法院高等行政訴訟庭為第一審管轄法院？","opts":["交通裁決事件","收容聲請事件","都市計畫審查事件","不服行政機關所為新臺幣100萬元罰鍰事件"],"a":3,"ex":"都市計畫審查事件有專屬管轄規定。","detail":"都市計畫審查事件依行政訴訟法特別規定，由高等行政法院高等行政訴訟庭為第一審管轄。交通裁決、收容聲請及一般罰鍰案件則各有不同的專屬或通常管轄規則。"},{"id":"113-行政法-29","year":"113","subject":"行政法","tag":"行政法","q":"考試錄取參加基礎訓練人員，如不服保訓會廢止受訓資格之行政處分，應如何救濟？","opts":["向保訓會提起復審","向考試院提起訴願","向原分發機關上級機關提起訴願","向受訓機關上級機關提起訴願"],"a":2,"ex":"應依作成行政處分機關及其法定救濟體系判斷。","detail":"不服保訓會作成的受訓資格廢止處分，救濟應依公務人員保障及訴願制度的法定管轄判斷。本題答案為向考試院提起訴願；不要只按受訓地點或原分發機關推定管轄。"},{"id":"113-行政法-30","year":"113","subject":"行政法","tag":"行政法","q":"下列何者並非行政罰法明定之阻卻違法事由？","opts":["依法令之行為","依所屬上級公務員職務命令之行為","不可抗力之行為","緊急避難之行為"],"a":2,"ex":"行政罰法第11、12條等規定列有依法令及緊急避難等阻卻違法事由。","detail":"行政罰法明定的阻卻違法事由包括依法令行為、依上級公務員職務命令行為、正當防衛及緊急避難等。不可抗力可能影響故意過失或責任成立，但不是本題所問的法定阻卻違法事由選項。"},{"id":"113-行政法-31","year":"113","subject":"行政法","tag":"行政法","q":"下列有關損失補償責任之敘述，何者正確？","opts":["依警察職權行使法，人民有可歸責事由時不予補償","依行政執行法，有可歸責人民事由者，法院得減免補償金額","依警械使用條例，有可歸責第三人事由時得減輕或免除補償","依行政程序法廢止授益處分，受益人信賴損失均不予補償"],"a":3,"ex":"警械使用條例的損失補償，須注意可歸責第三人的效果。","detail":"警械使用造成特別犧牲時，依警械使用條例及相關規定處理損失補償；若損害發生可歸責於第三人，得依法減輕或免除補償。須區分國家賠償的違法責任與合法公權力行使的損失補償。"},{"id":"113-行政法-32","year":"113","subject":"行政法","tag":"行政法","q":"受理訴願機關不得為下列何種決定？","opts":["不受理","在訴願人表示不服範圍內，逕為加重處罰之變更","發回原行政處分機關另為處分","課予義務訴願指定期間命機關作成處分"],"a":2,"ex":"訴願決定不得在訴願人不服範圍內作更不利益變更。","detail":"訴願法禁止不利益變更：原處分相對人提起訴願時，訴願機關原則上不得在其不服範圍內加重處分。這是保障人民救濟權，避免因提起救濟反而處境更差。"},{"id":"113-行政法-33","year":"113","subject":"行政法","tag":"行政法","q":"行政法人對監督機關所為行政處分認為違法或不當而損害其權利或利益時，如何救濟？","opts":["不得提起救濟","得提起申訴","得提起訴願","得提起復審"],"a":3,"ex":"行政法人與監督機關間的行政處分，得依訴願制度救濟。","detail":"行政法人雖具公法人地位，與監督機關間若發生監督機關對其作成行政處分的情形，依法得循訴願途徑救濟。需留意行政法人不是一般私人法人，也不是公務員個人。"},{"id":"113-行政法-34","year":"113","subject":"行政法","tag":"行政法","q":"下列有關行政救濟時效之敘述，何者正確？","opts":["訴願應自處分達到或公告期滿日起30日內提起","訴願機關2個月不決定即可逕向行政法院起訴","課予義務訴訟原則上應於訴願決定送達後3個月內提起","行政訴訟抗告應於裁定送達後10日內提起"],"a":4,"ex":"行政訴訟抗告期間為裁定送達後10日的不變期間。","detail":"行政訴訟法規定，對裁定提起抗告，原則上應於裁定送達後10日的不變期間內提出。訴願及課予義務訴訟另有不同期間，考試常以30日、2個月及3個月作混淆。"},{"id":"113-行政法-35","year":"113","subject":"行政法","tag":"行政法","q":"下列有關國家賠償法制之敘述，何者正確？","opts":["國賠法公務員僅限依公務人員任用法任用者","開放山域自然公物設施已適當警告，人民仍冒險受損，國家仍負完全賠償責任","警察違法使用警械侵害人民權利，不適用國賠法","警察重大過失違法使用警械，賠償義務機關不得向其求償"],"a":4,"ex":"國賠法及警械使用條例涉及賠償義務機關對故意或重大過失人員的求償。","detail":"警察違法使用警械致人民權利受侵害，仍可能成立國家賠償；賠償義務機關對有故意或重大過失的公務員，依法可能有求償權。應區分國家對人民的外部賠償責任與機關對公務員的內部求償。"},{"id":"113-行政法-36","year":"113","subject":"行政法","tag":"行政法","q":"有關公務員之懲戒，下列敘述何者正確？","opts":["撤職停止任用期間為6個月以上、5年以下","同一行為已受刑罰或行政罰者不得懲戒","監察院對薦任第9職等以上公務員得逕予懲戒","行政懲處後又經懲戒法院判決不受懲戒確定，原行政懲處失效"],"a":4,"ex":"同一行為的行政懲處與懲戒程序關係，須依懲戒法規定判斷。","detail":"公務員懲戒與行政懲處不是完全相同的制度。題目涉及懲戒法院判決確定後，行政懲處的效力如何處理，應依公務員懲戒法的特別規定判斷，不能直接套用刑事一事不再理。"},{"id":"113-行政法-37","year":"113","subject":"行政法","tag":"行政法","q":"有關行政執行法之管收，下列敘述何者正確？","opts":["由行政執行官逕行裁定","不服管收裁定得提起抗告","管收期限最長為5年","義務人公法上金錢給付義務因管收執行完畢而免除"],"a":2,"ex":"管收裁定的救濟方式為抗告。","detail":"管收須由法院裁定，行政執行機關不能自行作成管收裁定；對管收裁定不服得依法抗告。管收是確保行政執行的手段，不代表公法上金錢給付義務因管收而消滅。"},{"id":"113-行政法-38","year":"113","subject":"行政法","tag":"行政法","q":"依行政程序法，公法上請求權之請求權人為人民時，原則上因多久期間不行使而消滅？","opts":["15年","10年","5年","3年"],"a":2,"ex":"行政程序法第131條：人民對行政機關之公法上請求權，原則上為10年。","detail":"行政程序法第131條規定，人民對行政機關的公法上請求權，原則上因10年間不行使而消滅；行政機關對人民的公法上請求權另有規範。題目問請求權人為人民，答案是10年。"},{"id":"113-行政法-39","year":"113","subject":"行政法","tag":"行政法","q":"下列何者非屬行政罰法所定之處罰種類？","opts":["罰款","命令停工","命令解散","公布姓名"],"a":1,"ex":"行政罰法的處罰種類包含罰鍰、沒入及其他裁罰性不利處分；本題依官方答案為 A。","detail":"行政罰法列舉的法定處罰名稱是『罰鍰』，不是口語常說的『罰款』。停工、解散或公布姓名可能依個別法律構成其他裁罰性不利處分；本題依官方答案選 A，關鍵在法定用語。"},{"id":"113-行政法-40","year":"113","subject":"行政法","tag":"行政法","q":"下列何者應適用行政程序法之程序規定？","opts":["刑事案件犯罪偵查程序","犯罪矯正機關為達成收容目的所為之行為","對公務人員所為一次記二大過之免職處分","考試院有關考選命題及評分之行為"],"a":3,"ex":"公務人員一次記二大過免職的程序適用問題，為本題考點。","detail":"行政程序法有若干適用除外事項，例如刑事偵查、矯正機關達成收容目的的行為，以及考試院考選命題評分等。公務人員一次記二大過免職屬對外影響身分權益的措施，仍須注意程序保障。"},{"id":"113-行政法-41","year":"113","subject":"行政法","tag":"行政法","q":"下列有關地方自治法規之敘述，何者正確？","opts":["自律規則由地方行政機關發布並報上級政府備查","自治條例與基於法律授權之法規牴觸者，無效","剝奪或限制居民權利義務得以自治規則定之","委辦規則毋須函報委辦機關核定"],"a":2,"ex":"自治條例與上位法規牴觸的效力，以及自治規則的規範事項是重點。","detail":"地方制度法區分自治條例、自治規則、自律規則及委辦規則。自治條例與法律或基於法律授權的法規牴觸時，依地方制度法處理其效力；限制居民權利義務原則上不能只靠自治規則。"},{"id":"113-行政法-42","year":"113","subject":"行政法","tag":"行政法","q":"有關行政法人之敘述，下列何者錯誤？","opts":["屬公法人性質","國家太空中心屬之","地方自治團體均不得設立行政法人","不服行政法人行政處分，得向監督機關提起訴願"],"a":3,"ex":"地方自治團體依法得設立行政法人，並非一律不得。","detail":"行政法人是依法設立、執行公共任務的公法人；地方自治團體在法律授權範圍內也得設立行政法人，因此不能說地方自治團體一律不得設立。行政法人行政處分的救濟另依監督及訴願規範處理。"},{"id":"113-行政法-43","year":"113","subject":"行政法","tag":"行政法","q":"下列何者非屬公務員服務法適用之對象？","opts":["現役軍人","公營事業機構純勞工以外之人員","中央研究院兼任行政職務之研究技術人員","中央警察大學未兼任行政職務之教授"],"a":4,"ex":"服務法適用對象須依身分及是否兼任行政職務判斷。","detail":"公務員服務法適用範圍須依法律所定身分判斷。中央警察大學未兼任行政職務的教授，不因任職於警察大學就當然成為服務法適用對象；兼任行政職務則須另行判斷。"},{"id":"113-行政法-44","year":"113","subject":"行政法","tag":"行政法","q":"直轄市山地原住民區之性質為何？","opts":["公法人","行政法人","行政機關","行政單位"],"a":1,"ex":"直轄市山地原住民區具有地方自治團體地位，屬公法人。","detail":"直轄市山地原住民區具有地方自治團體地位，依法為公法人，享有自治及自治財政等法定權限。不要與行政法人、行政機關或機關內部行政單位混淆。"},{"id":"113-行政法-45","year":"113","subject":"行政法","tag":"行政法","q":"下列何者非屬行政單位？","opts":["臺北市政府警察局保安警察大隊","新北市政府警察局板橋分局板橋派出所","內政部警政署行政組","內政部警政署勤務指揮中心"],"a":1,"ex":"行政單位與行政機關的組織法定位需區分；本題依官方答案為 A。","detail":"行政機關內部的行政單位通常不具獨立對外行使公權力及作成行政處分的組織地位；大隊等編制是否為機關或單位，應依組織法規及編制判斷。本題依官方答案選 A。"},{"id":"113-行政法-46","year":"113","subject":"行政法","tag":"行政法","q":"下列有關公權力行政之敘述，何者錯誤？","opts":["又稱高權行政","不得以行政契約方式為之","適用公法規定所為之行政行為","救濟途徑為行政爭訟與國家賠償程序"],"a":2,"ex":"公權力行政並非一概不得以行政契約方式進行。","detail":"公權力行政又稱高權行政，原則上適用公法並受行政爭訟及國家賠償制度規範，但不代表只能用單方行政處分。法律允許時，公權力行政也可能透過行政契約實現。"},{"id":"113-行政法-47","year":"113","subject":"行政法","tag":"行政法","q":"下列有關私經濟行政之敘述，何者錯誤？","opts":["又稱國庫行政","公營事業機構營利行為屬之","警察機關與廠商簽訂警槍採購契約不屬之","有爭議應循民事訴訟程序處理"],"a":3,"ex":"行政機關採購契約通常屬私經濟行政，選項敘述需對照契約性質。","detail":"私經濟行政又稱國庫行政，包含政府以私法方式從事採購、營利或財產管理。警察機關與廠商簽訂警槍採購契約，通常是政府採購的私法契約，故說『不屬之』是錯誤敘述。"},{"id":"113-行政法-48","year":"113","subject":"行政法","tag":"行政法","q":"依層級化法律保留理論及司法院大法官解釋意旨，公務人員保險金請求權消滅時效屬於何者？","opts":["憲法保留","絕對法律保留","相對法律保留","非屬法律保留"],"a":2,"ex":"涉及公務人員保險給付請求權消滅時效的法律保留層級。","detail":"公務人員保險給付請求權的消滅時效涉及人民（公務人員）重要財產權及權利行使期限，依層級化法律保留理論，應由法律明定，屬絕對法律保留的重要考點。"},{"id":"113-行政法-49","year":"113","subject":"行政法","tag":"行政法","q":"合目的性原則係屬下列何者？","opts":["適當性原則","必要性原則","狹義比例原則","法益衡量原則"],"a":1,"ex":"合目的性對應比例原則中的適當性原則。","detail":"比例原則中的適當性原則，又稱合目的性或適合性：所採手段必須有助於達成行政目的。必要性要求有多種同樣有效手段時選擇侵害最小者；狹義比例則衡量利益與損害。"},{"id":"113-行政法-50","year":"113","subject":"行政法","tag":"行政法","q":"下列何者之信賴利益值得保護？","opts":["以詐欺方法使行政機關作成行政處分者","對重要事項提供不正確資料致機關據以作成處分者","對重要事項為不完全陳述致機關據以作成處分者","因輕微過失而不知行政處分違法者"],"a":4,"ex":"信賴保護須考量受益人是否明知或因重大過失而不知處分違法。","detail":"行政程序法第119條列出信賴不值得保護的情形，包括以詐欺、脅迫或賄賂取得處分、對重要事項提供不正確或不完全資料，以及明知或因重大過失而不知處分違法。僅有輕微過失而不知違法，尚非當然排除信賴保護。"}];
-let deck=JSON.parse(localStorage.getItem("pocketDeck113")||"null");
-if(!deck || !deck.some(x=>x.id&&x.id.startsWith("113-行政法-"))) deck=demo;
-let state=JSON.parse(localStorage.getItem("pocketState")||'{"seen":[],"favorites":[],"wrong":[]}');let current=0;let viewDeck=deck;
-function save(){localStorage.setItem("pocketDeck113",JSON.stringify(deck));localStorage.setItem("pocketState",JSON.stringify(state));stats()}
-function stats(){document.getElementById("seen").textContent=state.seen.length;document.getElementById("saved").textContent=state.favorites.length;document.getElementById("wrong").textContent=state.wrong.length}
-function draw(i){viewDeck=deck;current=(i+viewDeck.length)%viewDeck.length;let c=viewDeck[current];document.getElementById("qid").textContent=c.id;document.getElementById("topic").textContent=c.tag||c.subject;document.getElementById("question").textContent=c.q;let wrap=document.getElementById("options");wrap.innerHTML="";c.opts.forEach((o,j)=>{let b=document.createElement("button");b.className="opt";b.textContent=String.fromCharCode(65+j)+". "+o;b.onclick=()=>answer(j);wrap.appendChild(b)});document.getElementById("reveal").classList.remove("show");document.getElementById("answer").textContent="";document.getElementById("explain").textContent="";document.getElementById("detail").textContent="";document.getElementById("fav").textContent=state.favorites.includes(c.id)?"★ 已收藏":"☆ 收藏";document.getElementById("wrongBtn").textContent=state.wrong.includes(c.id)?"已列入錯題 ✓":"標記錯題";document.getElementById("info").textContent=`113年警察人員升官等考試｜行政警察人員｜行政法｜共 ${deck.length} 題。` ;stats()}
-function answer(j){let c=viewDeck[current],buttons=[...document.querySelectorAll(".opt")];if(buttons.some(b=>b.disabled))return;state.seen=[...new Set([...state.seen,c.id])];buttons.forEach((b,k)=>{b.disabled=true;if(k===c.a-1||(c.id.endsWith("15")&&k===3))b.classList.add("correct");if(k===j&&j!==c.a-1&&!(c.id.endsWith("15")&&j===3))b.classList.add("wrong")});document.getElementById("reveal").classList.add("show");document.getElementById("answer").textContent="正確答案："+(c.id.endsWith("15")?"B 或 D（官方備註均給分）":String.fromCharCode(64+c.a));document.getElementById("explain").textContent="考點摘要："+(c.ex||"請參照法規及官方試題解析。");document.getElementById("detail").textContent="逐題解析：\n"+(c.detail||"請搭配法條複習。");save()}
-function showList(ids,label){let list=deck.filter(c=>ids.includes(c.id));if(!list.length){alert(label+"目前是空的。");return}let old=deck;deck=list;draw(0);document.getElementById("info").textContent=label+`｜${list.length} 題`;document.getElementById("next").onclick=()=>draw((current+1)%deck.length);document.getElementById("random").onclick=()=>draw(Math.floor(Math.random()*deck.length));document.getElementById("all").onclick=()=>{deck=old;wire();draw(0)}}
-function wire(){document.getElementById("next").onclick=()=>draw((current+1)%deck.length);document.getElementById("random").onclick=()=>draw(Math.floor(Math.random()*deck.length));document.getElementById("all").onclick=()=>alert(`113年行政法 ${deck.length} 題｜已答 ${state.seen.length}｜收藏 ${state.favorites.length}｜錯題 ${state.wrong.length}`)}
-document.getElementById("next").onclick=()=>draw((current+1)%deck.length);document.getElementById("random").onclick=()=>draw(Math.floor(Math.random()*deck.length));document.getElementById("fav").onclick=()=>{let id=viewDeck[current].id;state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];save();draw(current)};document.getElementById("wrongBtn").onclick=()=>{let id=viewDeck[current].id;state.wrong=state.wrong.includes(id)?state.wrong.filter(x=>x!==id):[...state.wrong,id];save();draw(current)};
-document.getElementById("review").onclick=()=>showList(state.wrong,"錯題複習");document.getElementById("favorites").onclick=()=>showList(state.favorites,"收藏卡片");document.getElementById("all").onclick=()=>alert(`113年行政法 ${deck.length} 題｜已答 ${state.seen.length}｜收藏 ${state.favorites.length}｜錯題 ${state.wrong.length}`);document.getElementById("reset").onclick=()=>{if(confirm("清除本機答題、收藏、錯題紀錄？")){state={seen:[],favorites:[],wrong:[]};save();draw(0)}};
-document.getElementById("import").onclick=()=>document.getElementById("file").click();document.getElementById("file").onchange=e=>{let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{let lines=reader.result.split(new RegExp("\\r?\\n")).filter(x=>x.trim());let rows=lines.slice(1).map((line,idx)=>{let p=line.split(",").map(x=>x.trim().replace(/^"|"$/g,""));if(p.length<10)return null;return{id:p[0]||"import-"+idx,year:p[1],subject:p[2],tag:p[3],q:p[4],opts:p.slice(5,9),a:Number(p[9]),ex:p[10]||""}}).filter(x=>x&&x.opts.length===4&&x.a>=1&&x.a<=4);if(rows.length){deck=[...deck,...rows];save();draw(0);alert("已匯入 "+rows.length+" 張卡片。")}else alert("未辨識到卡片。CSV欄位：id,year,subject,tag,question,A,B,C,D,answer(1-4),explanation")};reader.readAsText(f,"UTF-8")};
-draw(0);stats();
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101a21"><title>警察升官等｜行政法口袋題庫</title><style>
+:root{--bg:#101a21;--panel:#18262f;--panel2:#21323c;--line:#344650;--text:#e7edf0;--muted:#9aabb5;--accent:#a9c47c;--gold:#d8bd78;--danger:#e38a83}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2b35 0,#101a21 55%);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.app{max-width:740px;margin:auto;padding:16px 16px 110px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}.brand{letter-spacing:.12em;font-weight:800;font-size:14px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.15em;font-weight:500;margin-top:3px}.pill{border:1px solid var(--line);color:var(--accent);border-radius:99px;padding:5px 10px;font-size:12px}.hero,.card{padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}.hero{background:linear-gradient(140deg,#233742,#17242c)}h1{font-size:23px;margin:4px 0}.muted{color:var(--muted);font-size:13px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px}.stat span{display:block;color:var(--muted);font-size:12px}.stat b{font-size:21px}.toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:12px;font:inherit;cursor:pointer}.btn.primary{background:var(--accent);border-color:var(--accent);color:#142019;font-weight:800;flex:1}.select{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit;width:100%}.question{font-size:18px;font-weight:650;margin:18px 0}.options{display:grid;gap:9px}.opt{width:100%;text-align:left;color:var(--text);background:#1d2c35;border:1px solid #354751;border-radius:12px;padding:13px;font:inherit;cursor:pointer}.opt.correct{border-color:#9ac27c;background:#263a30}.opt.wrong{border-color:var(--danger);background:#3a292a}.opt:disabled{cursor:default}.reveal{display:none;margin-top:14px;border-radius:13px;background:#23352f;border:1px solid #4b6653;padding:14px}.reveal.show{display:block}.answerline{color:var(--accent);font-weight:750}.explain{font-size:14px;color:#c5d1d4;margin-top:6px}.actions{display:flex;gap:9px;margin-top:14px}.notice{color:var(--muted);font-size:12px;margin:14px 3px}.nav{position:fixed;bottom:0;left:0;right:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:#101a21ee;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:8px}.nav button{max-width:180px;flex:1}#listPanel{display:none;margin-top:12px}#listPanel.show{display:block}a{color:var(--accent)}
+</style></head><body><main class="app"><header class="top"><div class="brand">FIELD STUDY<small>POLICE PROMOTION · ADMINISTRATIVE LAW</small></div><span class="pill">個人備考</span></header><section class="hero"><div class="muted">POCKET FLASHCARDS</div><h1>行政法歷屆試題</h1><p class="muted">官方試題與答案核對版｜短時間抽題練習</p></section><div class="stats"><div class="stat"><span>題庫題數</span><b id="total">0</b></div><div class="stat"><span>已答題</span><b id="seenCount">0</b></div><div class="stat"><span>錯題</span><b id="wrongCount">0</b></div></div><section class="card"><label class="muted" for="yearSelect">考試年度</label><select id="yearSelect" class="select"></select><div class="cardhead muted" style="display:flex;justify-content:space-between;margin-top:12px"><span id="qid">題號</span><span id="topic">行政法</span></div><div class="question" id="question">載入中…</div><div class="options" id="options"></div><div class="reveal" id="reveal"><div class="answerline" id="answer"></div><div class="explain" id="explain"></div></div><div class="actions"><button class="btn" id="prev">← 上一題</button><button class="btn primary" id="next">下一題 →</button></div><div class="toolbar"><button class="btn" id="random">⤨ 隨機抽題</button><button class="btn" id="favBtn">☆ 收藏</button><button class="btn" id="wrongBtn">標記錯題</button></div></section><div class="toolbar"><button class="btn" id="wrongReview">錯題複習</button><button class="btn" id="favReview">收藏卡片</button><button class="btn" id="statsBtn">題庫統計</button><button class="btn" id="reset">重置進度</button></div><section class="card" id="listPanel"><div id="listTitle"></div><div id="listItems"></div><button class="btn" id="closeList" style="margin-top:10px">關閉</button></section><p class="notice" id="notice">來源：官方考試試題及標準答案。解析為後續學習整理，非官方解答。115 年答案未提供，該年暫不判分。答題紀錄僅存於本裝置瀏覽器。</p><p class="notice">考試年度：107、109、111、113、115（每兩年舉辦；依檔案納入）</p></main><footer class="nav"><button class="btn" id="bottomWrong">錯題</button><button class="btn" id="bottomFav">收藏</button><button class="btn" id="resetBottom">清除紀錄</button></footer><script>
+const data={
+  "107": [
+    {
+      "number": 1,
+      "question": "下列何者屬於行政法之不成文法源？",
+      "options": [
+        "法規命令",
+        "行政法院判例",
+        "緊急命令",
+        "委辦規則"
+      ],
+      "id": "107-01",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 2,
+      "question": "「行政行為，非有正當理由，不得為差別待遇」，為下列何種法律原則之表現？",
+      "options": [
+        "誠實信用原則",
+        "比例原則",
+        "法律保留原則",
+        "平等原則"
+      ],
+      "id": "107-02",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 3,
+      "question": "甲欠稅 500 萬元，其有土地數筆，該管行政執行分署卻就其價值高達 2 億以上之土地進行拍賣。甲得主 張拍賣行為違反下列何種原則？",
+      "options": [
+        "比例原則",
+        "誠實信用原則",
+        "不當聯結禁止原則",
+        "不利益變更禁止原則"
+      ],
+      "id": "107-03",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 4,
+      "question": "法律授權行政機關以命令填補法律之不足時，應符合下列何種原則？",
+      "options": [
+        "授權明確性原則",
+        "法律優位原則",
+        "禁止裁量濫用原則",
+        "個案正義原則"
+      ],
+      "id": "107-04",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 5,
+      "question": "下列何者屬於行政機關裁量之範疇？",
+      "options": [
+        "對於證物證據力之評價",
+        "對於法律要件之解釋",
+        "對於法定年齡之計算",
+        "對於法律效果之選擇"
+      ],
+      "id": "107-05",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 6,
+      "question": "下列行為何者非屬私法性質之行政？",
+      "options": [
+        "營造公共工程",
+        "興建社會福利住宅",
+        "取締交通違規，處以 6 千元以下罰鍰",
+        "成立臺灣自來水公司，負責供水業務"
+      ],
+      "id": "107-06",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 7,
+      "question": "依實務見解，軍校招生錄取通知函係屬下列何種行政行為？",
+      "options": [
+        "行政處分",
+        "行政契約",
+        "行政事實行為",
+        "行政執行"
+      ],
+      "id": "107-07",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 8,
+      "question": "下列何者為行政法人？",
+      "options": [
+        "國家運動訓練中心",
+        "國家實驗研究院",
+        "國家理論科學研究中心",
+        "工業技術研究院"
+      ],
+      "id": "107-08",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 9,
+      "question": "下列何者非屬行政機關與內部單位之區別標準？",
+      "options": [
+        "有無單獨預算",
+        "有無單獨人事編制",
+        "有無權利能力",
+        "有無單獨之組織法規"
+      ],
+      "id": "107-09",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 10,
+      "question": "行政機關依法規將其權限交由同一行政主體不相隸屬之機關執行，為下列何種管轄權限之移轉？",
+      "options": [
+        "權限委託",
+        "權限委任",
+        "行政委託",
+        "權限委辦"
+      ],
+      "id": "107-10",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 11,
+      "question": "行政機關得依下列何種法規為權限委任？",
+      "options": [
+        "職權命令",
+        "法規命令",
+        "行政規則",
+        "自律規則"
+      ],
+      "id": "107-11",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 12,
+      "question": "行政機關對事件管轄權之有無產生疑義時，應如何處理？",
+      "options": [
+        "依當事人主張定其管轄權",
+        "囑託法院進行調查",
+        "行政機關應依職權調查",
+        "有爭議即通知當事人不予受理"
+      ],
+      "id": "107-12",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 13,
+      "question": "行政機關受理人民申請案件，發現管轄錯誤時，應為如何之處置？",
+      "options": [
+        "直接駁回申請",
+        "通知申請人自行改向有管轄權之機關提出申請",
+        "應即移送有管轄權之機關，並通知當事人",
+        "依職權視為本機關之業務加以處理"
+      ],
+      "id": "107-13",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 14,
+      "question": "依公務人員保障法規定，下列何者非屬得提起復審之事項？",
+      "options": [
+        "公務人員受年終考績考列丙等",
+        "公務人員受服務機關停職",
+        "公務人員受主管長官訓斥",
+        "公務人員遭服務機關一次記兩大過"
+      ],
+      "id": "107-14",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 15,
+      "question": "下列何者非屬公務員應受懲戒之事由？",
+      "options": [
+        "違法執行職務",
+        "怠於執行職務",
+        "非執行職務之違法行為，致嚴重損害政府之信譽",
+        "非執行職務之違法行為，致社會對該公務員觀感不佳"
+      ],
+      "id": "107-15",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 16,
+      "question": "行政機關將新設道路開放供一般民眾使用，其法律性質為何？",
+      "options": [
+        "行政處分",
+        "行政契約",
+        "行政指導",
+        "行政規則"
+      ],
+      "id": "107-16",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 17,
+      "question": "下列何者非屬行政規則？",
+      "options": [
+        "上級機關為協助下級機關統一解釋法令而訂頒之解釋性規定",
+        "行政機關關於機關內部事務分配之一般性規定",
+        "長官為協助屬官行使裁量權而訂頒之裁量基準",
+        "行政機關依法律授權發布之施行細則"
+      ],
+      "id": "107-17",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 18,
+      "question": "關於法規命令之訂定程序，下列敘述何者錯誤？",
+      "options": [
+        "法規命令之訂定，得由人民提議為之",
+        "行政機關得自行研擬法規命令草案",
+        "行政機關擬訂法規命令時，原則上無須預先對外公告",
+        "行政機關得依職權舉行法規命令訂定之聽證"
+      ],
+      "id": "107-18",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 19,
+      "question": "依行政程序法規定，下列何者非書面行政處分應記載之事項？",
+      "options": [
+        "利害關係人之姓名",
+        "相對人之姓名",
+        "事實、理由及其法令依據",
+        "不服行政處分之救濟方法"
+      ],
+      "id": "107-19",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 20,
+      "question": "關於行政處分之敘述，下列何者錯誤？",
+      "options": [
+        "違法之行政處分，行政機關得撤銷之",
+        "人民不服行政處分者，得依法提起救濟",
+        "下命行政處分得作為行政執行之執行名義",
+        "行政處分為機關與相對人間協議之雙方行為"
+      ],
+      "id": "107-20",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 21,
+      "question": "依行政程序法規定，關於合法行政處分之廢止，下列敘述何者錯誤？",
+      "options": [
+        "非授予利益之行政處分，廢止後仍應為同一內容之處分者，不得廢止",
+        "附負擔之行政處分，受益人未履行該負擔時，原處分機關得廢止該行政處分",
+        "行政處分自廢止時起失其效力，原處分機關不得另行指定日期",
+        "行政處分因受益人未履行負擔致行政處分受廢止者，得溯及既往失其效力"
+      ],
+      "id": "107-21",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 22,
+      "question": "有關私立大學之行為，下列何者屬行政處分？",
+      "options": [
+        "購買校地",
+        "核發薪資",
+        "聘任職員",
+        "開除學籍"
+      ],
+      "id": "107-22",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 23,
+      "question": "關於行政處分附款之附加，下列敘述何者正確？",
+      "options": [
+        "以法律有明文規定者為限",
+        "不得違背行政處分之目的",
+        "應獲得上級機關之許可",
+        "應經人民申請或同意始得為之"
+      ],
+      "id": "107-23",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 24,
+      "question": "下列何者非屬行政處分無效之原因？",
+      "options": [
+        "處分內容對於任何人均屬不能實現者",
+        "不能由書面處分中得知處分機關者",
+        "依法應經其他機關核准而未經核准者",
+        "所許可之行為構成犯罪者"
+      ],
+      "id": "107-24",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 25,
+      "question": "下列何者為行政處分？",
+      "options": [
+        "土地移轉之登記",
+        "傳染病防治之宣導",
+        "公有游泳池之管理",
+        "國有非公用財產之標售"
+      ],
+      "id": "107-25",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 26,
+      "question": "下列何者非屬行政處分之要件要素？",
+      "options": [
+        "法效性",
+        "抽象性",
+        "單方性",
+        "公權力"
+      ],
+      "id": "107-26",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 27,
+      "question": "行政機關與人民依國家賠償法成立之賠償協議，其法律性質為何？",
+      "options": [
+        "行政處分",
+        "行政契約",
+        "行政指導",
+        "行政計畫"
+      ],
+      "id": "107-27",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 28,
+      "question": "行政機關與人民締結行政契約，互負給付義務者，下列何者非屬行政程序法所定應符合之規定？",
+      "options": [
+        "人民之給付應以本國通用貨幣為之",
+        "人民之給付與行政機關之給付應相當，並具有正當合理之關聯",
+        "人民之給付應有助於行政機關執行其職務",
+        "契約中應約定人民給付之特定用途"
+      ],
+      "id": "107-28",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 29,
+      "question": "行政契約當事人之一方為人民，依法應以競爭方式決定當事人時，行政機關未給予參與競爭者表示意見 之機會者，該契約之效力為：",
+      "options": [
+        "無效",
+        "得撤銷",
+        "效力未定",
+        "仍為有效"
+      ],
+      "id": "107-29",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 30,
+      "question": "有關行政程序法第 137 條雙務契約之敘述，下列何者錯誤？",
+      "options": [
+        "契約應載明約定人民給付之特定用途及僅供該特定用途使用之意旨",
+        "行政機關僅能在有權作成裁量處分時，始得以行政契約代替裁量處分之作成",
+        "約定之人民給付與行政機關之給付應相當，並具有正當合理之關聯",
+        "約定之人民給付應有助於行政機關執行其職務"
+      ],
+      "id": "107-30",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 31,
+      "question": "有關行政契約約定自願接受執行，下列敘述何者正確？",
+      "options": [
+        "債務人不為給付時，債權人得以該契約為強制執行之執行名義",
+        "強制執行準用民法相關之規定",
+        "締約之一方為縣市政府時，應報請縣議會認可",
+        "締約之一方為中央各部會時，應報請立法院認可"
+      ],
+      "id": "107-31",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 32,
+      "question": "行政機關在其職掌範圍內，為實現一定之行政目的，以輔導或建議等方法，促請特定人為一定作為或不 作為之行為。其性質為何？",
+      "options": [
+        "行政處分",
+        "行政協定",
+        "行政指導",
+        "行政規則"
+      ],
+      "id": "107-32",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 33,
+      "question": "關於行政罰法所適用之原則，下列何者不屬之？",
+      "options": [
+        "屬地原則",
+        "從新從輕原則",
+        "責任原則",
+        "過失相抵原則"
+      ],
+      "id": "107-33",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 34,
+      "question": "數行為違反同一或不同行政法上義務之規定者，應如何處罰？",
+      "options": [
+        "分別處罰",
+        "依最重處罰",
+        "依最輕處罰",
+        "依最重處罰加重至三分之一"
+      ],
+      "id": "107-34",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 35,
+      "question": "依行政罰法規定，違反行政法義務應受法定罰鍰最高額新臺幣多少元以下，行政機關認情節輕微以不處 罰為適當者，得免於處罰？",
+      "options": [
+        "6,000",
+        "5,000",
+        "4,000",
+        "3,000"
+      ],
+      "id": "107-35",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 36,
+      "question": "依行政執行法規定，下列何者不屬於行為義務之執行方法？",
+      "options": [
+        "怠金",
+        "代履行",
+        "直接強制",
+        "禁止命令"
+      ],
+      "id": "107-36",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 37,
+      "question": "訴願事件應為不受理之決定者，下列何者不包括在內？",
+      "options": [
+        "訴願書不合法定程式，而情形可補正者",
+        "對已撤回之訴願事件，重行提起訴願者",
+        "訴願人已死亡或消滅，且無人承受訴願",
+        "原行政處分已不存在，或訴願已無實益"
+      ],
+      "id": "107-37",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 38,
+      "question": "下列何者不得為訴願標的？",
+      "options": [
+        "對違規工廠之裁罰",
+        "公物之設定",
+        "對依法申請案件之拒絕",
+        "拒絕國家賠償之書函"
+      ],
+      "id": "107-38",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 39,
+      "question": "下列何者非屬訴願法所定之請求事項？",
+      "options": [
+        "訴願人得請求閱覽卷內文書",
+        "訴願人得請求言詞辯論",
+        "訴願人得請求聽證",
+        "訴願人得請求停止執行"
+      ],
+      "id": "107-39",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 40,
+      "question": "依訴願法規定，不服訴願決定而提起行政訴訟，其起訴法定期限為何？",
+      "options": [
+        "30 日",
+        "1 個月",
+        "60 日",
+        "2 個月"
+      ],
+      "id": "107-40",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 41,
+      "question": "關於我國行政訴訟之審級制度，下列敘述何者正確？",
+      "options": [
+        "三級二審，即地方法院行政訴訟庭、高等行政法院、最高行政法院",
+        "二級二審，即高等行政法院、最高行政法院",
+        "三級三審，即地方法院行政訴訟庭、高等行政法院、最高行政法院",
+        "二級二審，即地方法院行政訴訟庭、高等行政法院"
+      ],
+      "id": "107-41",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 42,
+      "question": "人民申請核發建造執照遭主管機關駁回，人民應以下列何種訴訟類型請求救濟？",
+      "options": [
+        "撤銷訴訟",
+        "課予義務訴訟",
+        "確認處分無效訴訟",
+        "一般給付訴訟"
+      ],
+      "id": "107-42",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 43,
+      "question": "下列何者非屬我國現行法下之行政訴訟事件？",
+      "options": [
+        "商標註冊爭議事件",
+        "外國人收容聲請事件",
+        "交通裁決事件",
+        "總統副總統選舉罷免事件"
+      ],
+      "id": "107-43",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 44,
+      "question": "甲收到課稅處分，應繳納稅金 1 千萬元。甲若不服此課稅處分，應提出何種訴訟？",
+      "options": [
+        "一般給付訴訟",
+        "撤銷訴訟",
+        "課予義務訴訟",
+        "確認處分違法訴訟"
+      ],
+      "id": "107-44",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 45,
+      "question": "有關一般給付訴訟之敘述，下列何者錯誤？",
+      "options": [
+        "因公法上原因發生之給付，得提起之",
+        "僅限於財產上之給付，始得提起",
+        "因行政契約所生之給付，得提起之",
+        "行政機關與人民皆得提起"
+      ],
+      "id": "107-45",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 46,
+      "question": "關於交通裁決事件訴訟程序，下列敘述何者錯誤？",
+      "options": [
+        "撤銷訴訟無不利益變更禁止原則之適用",
+        "起訴按件徵收新臺幣 3 百元之裁判費",
+        "裁判得不經言詞辯論為之",
+        "得由原告住所地之地方法院行政訴訟庭管轄"
+      ],
+      "id": "107-46",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 47,
+      "question": "有關行政損失補償之敘述，下列何者錯誤？",
+      "options": [
+        "公用徵收，應予以補償",
+        "行政機關實施即時強制時，原則上應給予財產遭受特別損失之第三人補償",
+        "行政機關撤銷違法授益處分時，對受信賴保護之相對人應給予合理補償",
+        "行政機關廢止合法授益處分時，無須給予受信賴保護之相對人補償"
+      ],
+      "id": "107-47",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 48,
+      "question": "國家賠償之賠償請求權，自損害發生時起，逾幾年不行使而消滅？",
+      "options": [
+        "1 年",
+        "2 年",
+        "3 年",
+        "5 年"
+      ],
+      "id": "107-48",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 49,
+      "question": "依國家賠償法規定，國家負損害賠償責任者，應以何種方式進行賠償？",
+      "options": [
+        "金錢賠償為原則，回復原狀為例外",
+        "回復原狀為原則，金錢賠償為例外",
+        "金錢賠償或回復原狀，由賠償義務機關依法定預算決定之",
+        "依當事人之請求定之"
+      ],
+      "id": "107-49",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 50,
+      "question": "依國家賠償法規定，下列何者屬公務員執行職務行使公權力之行為？",
+      "options": [
+        "環保局人員實施機車排氣攔檢",
+        "稅務人員參加稽徵業務研習活動",
+        "公務人員辦理機關年終聚餐",
+        "警員於值勤期間從事私人保全工作"
+      ],
+      "id": "107-50",
+      "year": "107",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    }
+  ],
+  "109": [
+    {
+      "number": 1,
+      "question": "關於行政法之法源，下列敘述何者錯誤？",
+      "options": [
+        "行政法之法源，可區分為成文法源及不成文法源",
+        "由於我國屬成文法國家，故成文法源之效力均優於不成文法源",
+        "司法院大法官之解釋，有拘束全國各機關及人民之效力",
+        "總統發布之緊急命令，於其生效期間，亦為行政法之法源"
+      ],
+      "id": "109-01",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 2,
+      "question": "下列何者適用信賴保護原則？",
+      "options": [
+        "行政機關長期放任之農地上違法建物，因監督機關糾正而遭拆除",
+        "偽造身障手冊領取之補助金",
+        "國家考試科目於考前一周公告變更",
+        "搶購經政府公告為特定開發區周邊土地，期待土地之增值利益"
+      ],
+      "id": "109-02",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 3,
+      "question": "某直轄市政府對違反補習及進修教育法之短期補習班，不問其情節輕重一律為撤銷立案之處分，違反下 列何種原則？",
+      "options": [
+        "信賴保護原則",
+        "平等原則",
+        "誠實信用原則",
+        "明確性原則"
+      ],
+      "id": "109-03",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 4,
+      "question": "甲申請舉辦路跑活動，主管機關為避免過度干擾沿線住戶安寧，在核准處分上附加不得使用汽笛喇叭之 負擔。甲不服，提起行政救濟。下列何者非屬法院判斷該處分合法性之考量因素？",
+      "options": [
+        "該負擔內容有無違反核准處分之目的",
+        "該負擔內容是否與核准處分間具有正當合理關聯",
+        "該負擔內容有無違反比例原則",
+        "該負擔內容是否為法律所明定"
+      ],
+      "id": "109-04",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 5,
+      "question": "下列何者非屬行政機關為達行政任務所為之輔助性措施？",
+      "options": [
+        "中央政府機關承租民間大樓作為辦公廳舍",
+        "財政部國有財產署標租非公用財產",
+        "鄉公所採購消滅登革熱病媒蚊之藥品",
+        "市政府於博覽會活動期間，僱請臨時人員引導遊客"
+      ],
+      "id": "109-05",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 6,
+      "question": "關於行政法律關係之敘述，下列何者正確？",
+      "options": [
+        "行政法律關係僅可透過行政處分而成立",
+        "行政法律關係不因法規構成要件該當而成立",
+        "行政法律關係並不因事實行為而成立",
+        "行政法律關係得因締結行政契約而成立"
+      ],
+      "id": "109-06",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 7,
+      "question": "關於地方制度法規定之敘述，下列何者正確？",
+      "options": [
+        "核定係指下級政府或機關間就其得全權處理之業務，依法完成法定效力後，陳報上級政府或主管機關 知悉之謂",
+        "自治法規由地方行政機關訂定，並發布或下達者，稱自治條例",
+        "縣（市）長因故不執行職務連續達 6 個月以上者，應由內政部解除其職務",
+        "直轄市與縣（市）間，事權發生爭議時，由立法院解決之"
+      ],
+      "id": "109-07",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 8,
+      "question": "依地方制度法規定，有關委辦事項之敘述，下列何者錯誤？",
+      "options": [
+        "委辦事項得由國家或其他上級地方自治團體交付辦理",
+        "地方自治團體執行委辦事項，受上級政府指揮監督",
+        "委辦事項由地方自治團體負行政執行之責",
+        "委辦事項無涉權限之移轉"
+      ],
+      "id": "109-08",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 9,
+      "question": "某直轄市政府環境保護主管機關接獲民眾申請社會救助案件時，依行政程序法規定，應為下列如何之處置？",
+      "options": [
+        "依職權移送有管轄權之主管機關",
+        "以不具管轄權為由駁回民眾申請",
+        "將事件委託有管轄權之機關辦理",
+        "自行判斷是否符合社會救助之標準"
+      ],
+      "id": "109-09",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 10,
+      "question": "下列何者屬於行政委託？",
+      "options": [
+        "文化部將藝文事項委請國家表演藝術中心辦理",
+        "教育部將大型運動賽事委請國家訓練運動中心辦理",
+        "公務人員保障暨培訓委員會將公務人員培訓事項委請國家文官學院辦理",
+        "大陸委員會將大陸事務委請財團法人海峽交流基金會辦理"
+      ],
+      "id": "109-10",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 11,
+      "question": "關於管轄權之認定，下列敘述何者錯誤？",
+      "options": [
+        "數行政機關就同一事件均有管轄權時，由受理在先之機關管轄",
+        "數行政機關就同一事件均有管轄權，而不能分別受理先後時，逕由共同上級機關指定管轄",
+        "行政機關喪失管轄權時，應將案件移送有管轄權之機關，並通知當事人",
+        "數行政機關於管轄權有爭議時，由共同上級機關指定管轄"
+      ],
+      "id": "109-11",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 12,
+      "question": "關於公務人員考績法之懲處與公務員懲戒法之懲戒，下列敘述何者錯誤？",
+      "options": [
+        "懲處由公務人員之服務機關為之；懲戒由懲戒法院為之",
+        "懲處得功過相抵；懲戒無功過相抵",
+        "懲處之對象不包括政務人員；懲戒之對象包括政務人員",
+        "不服懲處處分無法院救濟管道；不服懲戒處分有法院救濟管道"
+      ],
+      "id": "109-12",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 13,
+      "question": "依公務員懲戒法規定，關於免除職務之敘述何者正確？",
+      "options": [
+        "免除職務僅免其現職，仍得被同一機關任命為公務員",
+        "免除職務不影響其任用資格，仍得由其他機關任命為公務員",
+        "免除職務與公務人員考績法中之免職，效果相同",
+        "免除職務除免其現職外，並不得再被任命為公務員"
+      ],
+      "id": "109-13",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 14,
+      "question": "公務人員對於某改革草案有諸多不滿，遂策劃其所屬公務人員協會發起相關活動，對外傳達立場及想法。 下列何種行為，與法未合？",
+      "options": [
+        "串連各機關公務人員協會於非工作日共同遊行，表達訴求",
+        "提出書面陳情",
+        "舉辦學術研討會，邀集各方專家討論改革議題",
+        "提出以締結團體協約為訴求之協商"
+      ],
+      "id": "109-14",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 15,
+      "question": "甲為經濟部派任於台灣電力公司之董事，關於其身分之敘述，下列何者正確？",
+      "options": [
+        "須具備公務人員任用資格始得擔任",
+        "為公務員服務法所稱之公務員",
+        "受終身職之保障",
+        "應為台灣電力公司利益而獨立行使職權，不受經濟部之指揮監督"
+      ],
+      "id": "109-15",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 16,
+      "question": "有關公務員之敘述，下列何者正確？",
+      "options": [
+        "同時具有中華民國與他國之國籍者，一律不得擔任公務員",
+        "公務員須年滿20 歲",
+        "公務員與國家間之關係均為公法契約關係",
+        "受監護或輔助宣告尚未撤銷者，不得擔任公務員"
+      ],
+      "id": "109-16",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 17,
+      "question": "公務人員保障事件於確定後，在特定情形下得向公務人員保障暨培訓委員會申請再審議，下列何者不得 提出？",
+      "options": [
+        "原處分機關",
+        "再申訴人之服務機關",
+        "再申訴人",
+        "利害關係人"
+      ],
+      "id": "109-17",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 18,
+      "question": "警車係屬下列何種公物？",
+      "options": [
+        "特許用物",
+        "行政用物",
+        "公共用物",
+        "特別用物"
+      ],
+      "id": "109-18",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 19,
+      "question": "有關法規命令之敘述，下列何者錯誤？",
+      "options": [
+        "發布命令之機關須為授權法律所明定之機關",
+        "不得增加母法所無之負擔",
+        "不能與母法或其他法律有所牴觸",
+        "原則上得授權其他機關訂定法規命令"
+      ],
+      "id": "109-19",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 20,
+      "question": "依行政程序法規定，行政機關廢止授予利益之行政處分時，關於受益人因信賴該處分致遭受財產上之損 失所為處置，下列敘述何者錯誤？",
+      "options": [
+        "應給予合理之補償，但補償之額度不得超過受益人因該處分存續可得之利益",
+        "受益人對於補償之金額若有不服，應向行政法院提起確認訴訟",
+        "關於補償之爭議，相對人有不服者，得向行政法院提起給付訴訟",
+        "補償請求權應自行政機關告知其事由時起，因2 年間不行使而消滅"
+      ],
+      "id": "109-20",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 21,
+      "question": "關於行政處分之附款，下列敘述何者正確？",
+      "options": [
+        "行政處分之附款，與羈束處分之目的不具正當合理之關聯者，不得附加",
+        "裁量處分不得為保留負擔之事後附加，否則違反明確性原則",
+        "法律明文規定裁量處分得為附款者，以附加條件或期限為限",
+        "羈束處分為確保行政處分法定要件之履行而為附款者，以附加負擔為限"
+      ],
+      "id": "109-21",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 22,
+      "question": "甲公費生與教育部簽訂公費留學行政契約，約定甲有違約情事時，應賠償公費。契約中並有甲自願接受 執行之約定，而甲拒不賠償公費時，教育部得如何處理？",
+      "options": [
+        "移送該管行政執行分署強制執行",
+        "聲請該管地方法院行政訴訟庭強制執行",
+        "聲請民事執行處強制執行",
+        "自為執行"
+      ],
+      "id": "109-22",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 23,
+      "question": "關於行政機關與人民締結之雙務行政契約，下列敘述何者錯誤？",
+      "options": [
+        "須有法律明文規定，行政機關始得透過契約之方式使人民負擔義務",
+        "人民之給付有助於行政機關執行其職務",
+        "人民之給付與行政機關之給付不相當時，該契約無效",
+        "人民之給付與行政機關之給付無正當合理之關聯時，該契約無效"
+      ],
+      "id": "109-23",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 24,
+      "question": "關於行政事實行為之敘述，下列何者正確？",
+      "options": [
+        "行政機關為行政事實行為時，均無須遵守法律所規定之程序",
+        "行政機關若無管轄權，仍可作成行政事實行為",
+        "行政事實行為須遵守行政程序法所規定之一般法律原則",
+        "行政事實行為直接發生公法上之法律效果"
+      ],
+      "id": "109-24",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 25,
+      "question": "汽車駕駛因酒駕肇事致他人受傷，經警察實施酒測確定酒精濃度已超過法定標準，除觸犯刑法傷害罪外， 並違反道路交通管理處罰條例規定而應接受罰鍰之裁處，並吊扣駕照。關於汽車駕駛應受刑罰制裁與行 政罰裁處之關係，下列敘述何者正確？",
+      "options": [
+        "同時接受刑罰與行政罰之處罰",
+        "先裁處罰鍰及吊扣駕照，不足之處再論處刑罰",
+        "先論處刑罰，不足之處再裁處罰鍰及吊扣駕照",
+        "先論處刑罰並吊扣駕照，如法院裁判確定無罪再裁處罰鍰"
+      ],
+      "id": "109-25",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 26,
+      "question": "依行政罰法規定，行政罰之裁處權，因幾年期間之經過而消滅？",
+      "options": [
+        "6 個月",
+        "1 年",
+        "2 年",
+        "3 年"
+      ],
+      "id": "109-26",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 27,
+      "question": "行為人因故意自行招致精神障礙，致不能辨識其行為違法，不適用減免之規定。此為何種概念之表現？",
+      "options": [
+        "責任明確原則",
+        "原因自由行為",
+        "誠實信用原則",
+        "過失責任主義"
+      ],
+      "id": "109-27",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 28,
+      "question": "下列何種違反行政法上義務之行為，依行政罰法規定不予處罰？",
+      "options": [
+        "行為人不知法律規定之行為",
+        "行為人依法令之行為",
+        "行為人之原因自由行為",
+        "滿 7 歲到 14 歲行為人之行為"
+      ],
+      "id": "109-28",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": [
+        "B",
+        "D"
+      ],
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 29,
+      "question": "依行政罰法之規定，關於裁處程序之敘述，下列何者正確？",
+      "options": [
+        "得沒入或可為證據之物之扣留，須經法院裁定後，方得為之",
+        "不服行政機關所為之強制到指定處所查證身分者，得向法院聲明異議",
+        "易生危險之扣留物，得經法院裁定或所有人同意後，毀棄之",
+        "物之所有人對於扣留不服者，得向扣留機關聲明異議"
+      ],
+      "id": "109-29",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 30,
+      "question": "下列何者非屬行政執行法上拘提之法定要件？",
+      "options": [
+        "顯有逃匿之虞",
+        "經合法通知，無正當理由而不到場",
+        "行政執行分署命提供相當擔保，限期履行，屆期不履行亦未提供相當擔保",
+        "拒絕報告財產狀況"
+      ],
+      "id": "109-30",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 31,
+      "question": "甲持刀隨機傷害路人，警察為避免路人受傷，得對甲採取下列何種行政執行方法？",
+      "options": [
+        "緊急強制",
+        "間接強制",
+        "即時強制",
+        "直接強制"
+      ],
+      "id": "109-31",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 32,
+      "question": "關於行政執行法中代履行之敘述，下列何者錯誤？",
+      "options": [
+        "無論何種行政法上義務，皆可適用代履行之方式",
+        "得由行政執行機關以外第三人代為履行",
+        "義務人對第三人之代履行，負有忍受義務",
+        "義務人必須負擔因第三人代履行所生費用"
+      ],
+      "id": "109-32",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 33,
+      "question": "關於怠金之敘述，下列何者正確？",
+      "options": [
+        "怠金與罰鍰之併科，不違反一行為不二罰之原則",
+        "基於人權保障，現行法禁止對人民連續處以怠金",
+        "怠金逾期繳納者，應向普通法院取得執行名義",
+        "連續處以怠金者，行政執行法並無特殊程序上要求"
+      ],
+      "id": "109-33",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 34,
+      "question": "甲縣政府勞工局認為乙公司有違反勞動基準法情形，裁罰前乙公司請求閱覽卷宗遭拒絕。如乙公司對於 被拒絕閱覽卷宗不服時，應如何救濟？",
+      "options": [
+        "逕向甲縣政府提起訴願",
+        "向甲縣政府聲明異議，遭駁回後再提行政訴訟",
+        "逕向勞動部提起訴願",
+        "於對裁罰處分不服，向勞動部提起訴願時，一併聲明不服"
+      ],
+      "id": "109-34",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 35,
+      "question": "行政程序法第 7 章「陳情」之規定，應屬下列那一種基本權利在法律層面上之制度設計？",
+      "options": [
+        "受益權",
+        "訴訟權",
+        "訴願權",
+        "請願權"
+      ],
+      "id": "109-35",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 36,
+      "question": "關於政府研究報告之資訊公開，下列敘述何者正確？",
+      "options": [
+        "政府派赴國外實習人員所提出報告應公開",
+        "政府有關非學術性報告才能公開",
+        "政府所委託專家學者之報告均係屬機密不能公開",
+        "政府派赴國外從事考察之研究報告均不能公開"
+      ],
+      "id": "109-36",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 37,
+      "question": "依行政程序法規定，關於聽證程序之敘述，下列何者正確？",
+      "options": [
+        "於一定地區設置重大公共設施之行政計畫，涉及多數不同利益之人及多數不同行政機關權限者，應經 聽證程序後裁決",
+        "依法應經聽證程序作成處分，而未舉行聽證程序者，該行政處分無效",
+        "不服經聽證程序作成之處分者，應提起訴願",
+        "聽證程序中僅得由當事人陳述意見"
+      ],
+      "id": "109-37",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 38,
+      "question": "依政府資訊公開法規定，下列敘述何者正確？",
+      "options": [
+        "舉行記者會、說明會並非政府資訊主動公開之方式",
+        "人民對於政府機關就其申請提供政府資訊所為之決定不服者，不得提起行政救濟",
+        "人民向政府機關申請提供政府資訊時，政府機關應於受理之日起15 日內，為准駁之決定",
+        "政府機關提供政府資訊時，均不得向申請人收取費用"
+      ],
+      "id": "109-38",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 39,
+      "question": "下列何者非屬私法形式之行政行為？",
+      "options": [
+        "政府採購機關所為之決標決定",
+        "行政機關職務宿舍之租用",
+        "市立圖書館新書之添購",
+        "公立醫院清潔人員之僱用"
+      ],
+      "id": "109-39",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 40,
+      "question": "訴願管轄機關對下列何項行政處分，僅得就其合法性進行審查？",
+      "options": [
+        "鄉公所就其地方自治事務作成行政處分",
+        "直轄市政府所屬機關就其地方自治事務作成行政處分",
+        "直轄市政府就中央所委辦之事務作成行政處分",
+        "司法院就其主管事務作成行政處分"
+      ],
+      "id": "109-40",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 41,
+      "question": "下列何種情形得依訴願法提起訴願？",
+      "options": [
+        "公務員不服服務機關對其作成年終考績丙等之評定",
+        "人民申請營業許可，主管機關逾2 個月仍未為准否之決定",
+        "政府採購案廠商不服招標機關就其所提採購異議所為之處理結果",
+        "人民不服主管機關依行政執行法所為之執行命令"
+      ],
+      "id": "109-41",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 42,
+      "question": "有關行政訴訟之訴訟參加，下列敘述何者錯誤？",
+      "options": [
+        "因原處分撤銷而有利害關係之第三人得於撤銷訴訟中為獨立參加",
+        "行政法院認其他行政機關有輔助一造之必要者，得命其參加訴訟",
+        "行政法院撤銷原處分之判決，對參加人不生效力",
+        "對於命參加訴訟之裁定，不得聲明不服"
+      ],
+      "id": "109-42",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 43,
+      "question": "甲醫師因業務上不正當行為，經醫師懲戒委員會廢止其執業執照，甲不服提出覆審後，醫師懲戒覆審委 員會亦維持廢止執業執照之決定，下列敘述何者正確？",
+      "options": [
+        "醫師懲戒之終局決定相當於法院終局判決，故甲不得聲明不服",
+        "醫師覆審委員會懲戒之終局決定相當於訴願決定，故甲得提起行政訴訟",
+        "醫師覆審委員會懲戒之終局決定相當於行政處分，故甲得提起訴願",
+        "醫師覆審委員會懲戒之終局決定相當於行政執行措施，故甲得聲明異議"
+      ],
+      "id": "109-43",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 44,
+      "question": "關於行政訴訟之審級制度，下列敘述何者錯誤？",
+      "options": [
+        "行政法院分地方法院行政訴訟庭、高等行政法院及最高行政法院等三級",
+        "行政訴訟採二審制；第一審為事實審，第二審為法律審",
+        "通常訴訟程序事件以高等行政法院為第一審，並得上訴至最高行政法院",
+        "交通裁決事件訴訟程序以地方法院行政訴訟庭為第一審，可直接上訴至最高行政法院"
+      ],
+      "id": "109-44",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 45,
+      "question": "依行政訴訟法規定，下列何者無行政訴訟之當事人能力？",
+      "options": [
+        "自然人",
+        "法人",
+        "非法人團體",
+        "行政機關內部單位"
+      ],
+      "id": "109-45",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 46,
+      "question": "依行政訴訟法規定，下列何者可提起行政訴訟？",
+      "options": [
+        "臺中市居民認為行政院環境保護署依空氣污染防制法通過之空氣污染防制計畫違法而損害其權利",
+        "臺北市認為行政院依預算法通過之前瞻基礎建設計畫違法而損害其權利",
+        "人民認為內政部依國土計畫法所發布之國土計畫違法而直接損害其權利",
+        "人民認為直轄市依都市計畫法所發布之都市計畫違法而直接損害其權利"
+      ],
+      "id": "109-46",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 47,
+      "question": "下列何項規定，不適用於國家損害賠償事件？",
+      "options": [
+        "民法第195 條關於非財產上損害所為之金錢賠償規定",
+        "民法第213 條關於損害賠償方法之規定",
+        "民法第216 條關於損害賠償範圍之規定",
+        "民法第217 條關於與有過失之規定"
+      ],
+      "id": "109-47",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 48,
+      "question": "國家因人民之土地被徵收所給予之補償，係基於下列何項原則？",
+      "options": [
+        "民主國原則",
+        "誠信原則",
+        "特別犧牲原則",
+        "比例原則"
+      ],
+      "id": "109-48",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 49,
+      "question": "關於國家賠償，下列敘述何者錯誤？",
+      "options": [
+        "賠償義務機關經裁撤或改組者，原則上以承受其業務之機關為賠償義務機關",
+        "管理機關如已就開放山域之使用為適當之警告，而人民仍從事冒險活動，國家不負損害賠償責任",
+        "因受委託行使公權力之團體其執行職務之人之故意而生之國家賠償責任，賠償義務機關對該團體有求 償權",
+        "經判決無罪確定之被告所被扣押之物品，警察機關於保管中因過失而遺失，由實施扣押之檢察官所屬 檢察署負損害賠償責任"
+      ],
+      "id": "109-49",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 50,
+      "question": "下列事件何者應向普通法院請求救濟？",
+      "options": [
+        "甲在國立大學，因地面濕滑及照明不佳而跌倒受傷",
+        "乙向花蓮縣政府申請建築執照，因要件不符而被否准",
+        "丙不服其因工廠廢水之排放所收到之罰單",
+        "丁公務員不服主管機關對其所為之免職決定"
+      ],
+      "id": "109-50",
+      "year": "109",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    }
+  ],
+  "111": [
+    {
+      "number": 1,
+      "question": "關於行政法法源之敘述，下列何者錯誤？",
+      "options": [
+        "不當得利之法理亦為行政法之不成文法法源",
+        "行政法法源包括成文法體系及不成文法體系",
+        "兒童權利公約非屬行政法法源",
+        "憲法判決為行政法法源"
+      ],
+      "id": "111-01",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 2,
+      "question": "關於法律優位原則之敘述，下列何者正確？",
+      "options": [
+        "地方自治團體就委辦事項，可基於法律之授權，訂定自治條例或自治規則，不受中央主管機關法規 命令之拘束",
+        "行政機關訂定行政命令，不得牴觸法律授權範圍及意旨，但基於執行必要，可限縮法律之適用",
+        "行政行為應受法律之拘束，法律應僅限於立法院通過並經總統公布者",
+        "在行政法之成文法規範體系中，憲法效力最高，法律次之，行政命令再次之，自治規章居於最下位"
+      ],
+      "id": "111-02",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 3,
+      "question": "關於地方自治團體所定自治法規或委辦規則之敘述，下列何者錯誤？",
+      "options": [
+        "地方議會所定自律規則，與上級自治法規牴觸時，基於尊重議會自律，仍為有效",
+        "自治條例與憲法、法律牴觸者，係違反法律優位原則，為無效",
+        "委辦規則與憲法、法律、中央法令牴觸者，無效",
+        "自治法規與憲法、法律、基於法律授權之法規、上級自治團體自治條例或該自治團體自治條例有無 牴觸發生疑義時，得聲請司法院解釋之"
+      ],
+      "id": "111-03",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 4,
+      "question": "下列何種事項非屬私經濟行政？",
+      "options": [
+        "勞動部發放「部分工時受僱勞工生活補貼」",
+        "地方自治團體標售公有非公用土地",
+        "經濟部出售中鋼股票",
+        "臺灣銀行基於與退除役軍職人員所訂立之優惠存款契約，給付優惠存款利息"
+      ],
+      "id": "111-04",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 5,
+      "question": "下列何者非屬公權力行政？",
+      "options": [
+        "行政機關依政府採購法與公營事業締結勞務採購契約",
+        "經濟部依促進民間參與公共建設法與民間機構締結海水淡化廠BOT投資契約",
+        "衛生福利部辦理疫苗採購及預防接種",
+        "中央流行疫情指揮中心成立期間，各級政府機關依指揮官之指示，向民間機構徵用或調用防疫器具、 設備、藥品、醫療器材等"
+      ],
+      "id": "111-05",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 6,
+      "question": "依司法院大法官解釋及現行法之規定，關於受刑人在監關係之敘述，下列何者錯誤？",
+      "options": [
+        "假釋人對於法務部撤銷假釋之處分，不得直接聲明不服，僅得就檢察官關於假釋撤銷後執行殘刑之 指揮，依刑事訴訟法第484條規定向普通法院刑事庭聲明異議",
+        "受刑人因監獄行刑而不服監獄所為影響其個人權益之處分或管理措施時，得以書面或言詞向監獄提 起申訴",
+        "受刑人因監獄行刑而不服監獄所為影響其個人權益之處分或管理措施，如因已執行而無回復原狀可 能或已消滅，但有即受確認判決之法律上利益者，仍可向監獄所在地之地方法院行政訴訟庭提起確 認處分違法之訴訟",
+        "受刑人認為監獄處分逾越達成監獄行刑目的所必要之範圍，而不法侵害其憲法所保障之基本權利且 非顯屬輕微者，經依法向監督機關提起申訴而不服其決定者，可向監獄所在地之地方法院行政訴訟 庭提起撤銷訴訟"
+      ],
+      "id": "111-06",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 7,
+      "question": "下列何者非屬行政機關？",
+      "options": [
+        "臺中市政府衛生局",
+        "衛生福利部中央健康保險署",
+        "臺北市政府警察局中正一分局介壽路派出所",
+        "內政部警政署國道公路警察局"
+      ],
+      "id": "111-07",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 8,
+      "question": "依照現行法規定，關於行政機關管轄之敘述，下列何者正確？",
+      "options": [
+        "同一事件，數行政機關依法均有管轄權時，應由受理在先之機關管轄；不能分別受理之先後者，由 其共同上級機關指定管轄",
+        "人民就其依法規申請之事件，發生數行政機關於管轄權有爭議時，得向共同上級機關申請指定管轄， 受理申請之機關應自請求到達之日起十五日內決定之",
+        "人民對行政機關所為指定管轄之決定，得向其上級機關聲明不服",
+        "行政機關因法規或事實之變更而喪失管轄權時，應將案件移送有管轄權之機關，並通知當事人。但 經當事人及有管轄權機關之同意，亦得由原管轄機關繼續處理該案件"
+      ],
+      "id": "111-08",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 9,
+      "question": "行政機關發現行政處分違反事件管轄權規定時，下列敘述何者錯誤？",
+      "options": [
+        "若已作成之行政處分違反土地管轄規定者，均為無效",
+        "若已作成之行政處分未經授權而違背法規關於專屬管轄規定者，均為無效",
+        "若已作成之行政處分缺乏事務權限者，均為無效",
+        "行政機關對事件管轄權之有無，應依職權調查；其認無管轄權者，應即移送有管轄權之機關，並通 知當事人"
+      ],
+      "id": "111-09",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 10,
+      "question": "依現行法規定，就違反地方自治事項之行政業務者，縣（市）規章可規定之不利處分，不包含下列何者？",
+      "options": [
+        "斷水斷電",
+        "新臺幣10萬元以下罰鍰",
+        "勒令停工",
+        "吊扣執照"
+      ],
+      "id": "111-10",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 11,
+      "question": "下列何者非屬公務員服務法上之公務員？",
+      "options": [
+        "兼任系所主管之國立大學教師",
+        "中央研究院院長",
+        "立法委員",
+        "陸海空軍軍官士官"
+      ],
+      "id": "111-11",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 12,
+      "question": "關於公務人員停職之敘述，下列何者錯誤？",
+      "options": [
+        "公務人員於停職期間，仍具公務人員身分",
+        "公務人員於停職期間，仍得執行職務",
+        "經依法停職之公務人員，於停職事由消滅後三個月內，得申請復職",
+        "經依法停職之公務人員，於停職事由消滅後三個月內，未申請復職，且接到服務機關或其上級機關人 事單位查催通知之日起三十日內仍未申請復職者，除有不可歸責於該公務人員之事由外，視為辭職"
+      ],
+      "id": "111-12",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 13,
+      "question": "依現行法規定，關於公務員懲戒處分之敘述，下列何者正確？",
+      "options": [
+        "曾經免除職務，或經撤職且於一定時間停止任用者，均不得再任公務員",
+        "對於已退休（職、伍）或其他原因已離職之公務員，就其任職期間之違法行為，不溯及懲戒",
+        "公務員經依法移送懲戒，或經主管機關送請監察院審查者，在不受懲戒、免議、不受理判決確定、 懲戒處分生效或審查結束前，不得資遣或申請退休、退伍",
+        "休職、減俸、降級處分於政務人員不適用之"
+      ],
+      "id": "111-13",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 14,
+      "question": "關於訂定法規命令之敘述，下列何者正確？",
+      "options": [
+        "行政機關訂定法規命令，縱屬有關軍事、外交或其他重大事項而涉及國家機密或安全，亦必須遵守 行政程序法所定程序",
+        "法規命令之訂定，亦可由人民或團體提議為之",
+        "行政機關訂定法規命令時，應舉行聽證",
+        "立法者授權行政機關為補充法規範內容所為「公告」，其性質均為行政規則"
+      ],
+      "id": "111-14",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 15,
+      "question": "下列何者不具法規性質？",
+      "options": [
+        "中華電信股份有限公司行動寬頻業務營業規章",
+        "高雄市地籍參考圖核發及收費辦法",
+        "定期通盤檢討對原都市計畫之主要計畫或細部計畫所作必要變更，其內容尚未直接限制一定區域內 特定人或可得確定多數人之權益或增加負擔者",
+        "全民健康保險投保金額分級表"
+      ],
+      "id": "111-15",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 16,
+      "question": "內政部移民署受理外國人甲申請永久居留案件後，已逾半年仍未作出准駁決定，亦未通知申請人延長 處理期間。下列敘述何者錯誤？",
+      "options": [
+        "除法規另有規定外，內政部移民署至遲應在四個月內處理終結該申請案件",
+        "甲向內政部提起訴願，請求內政部移民署應於一定期限前作出准駁決定",
+        "甲係基於法規之申請，如以掛號郵寄方式向行政機關提出，以交郵當日之郵戳為準",
+        "甲應以內政部移民署為被告機關逕向臺北高等行政法院提起課以義務訴訟，請求內政部移民署應於 一定期限前作出准駁決定"
+      ],
+      "id": "111-16",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 17,
+      "question": "下列何者，得依法提起撤銷訴訟？",
+      "options": [
+        "不服私立大學教師評審委員會所作成教師不予升等評審決定",
+        "已歇業或破產後之雇主，不服勞動部勞工保險局動用工資墊償基金後仍代為向其求償積欠工資之通知",
+        "地方居民不服地方政府廢止既成道路公告",
+        "地方居民不服都市計畫主要計畫定期通盤檢討之公告"
+      ],
+      "id": "111-17",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 18,
+      "question": "關於行政契約之敘述，下列何者錯誤？",
+      "options": [
+        "行政機關基於法定職權，得以行政契約與人民約定由對造為特定用途之給付，而行政機關亦負相對 之給付義務",
+        "為執行公法法規，行政機關本應作成行政處分者，亦得以行政契約代替",
+        "行政機關為防止或除去對公益之重大危害，終止與人民所締結之行政契約時，行政契約相對人可提 請課以義務訴訟，要求行政機關補償其因此所受之財產上損失",
+        "對於民間參與公共建設投資契約，行政機關得準用政府採購法處理招標、審標規定以甄選或其他競 爭方式決定該行政契約最優申請案件申請人"
+      ],
+      "id": "111-18",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 19,
+      "question": "下列何者非屬行政契約？",
+      "options": [
+        "全民健康保險特約",
+        "退除役軍職人員與臺灣銀行股份有限公司訂立優惠存款契約",
+        "衛生福利部重點科別培育公費醫學生契約書",
+        "公立學校教師聘約"
+      ],
+      "id": "111-19",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 20,
+      "question": "下列何者非屬行政上事實行為？",
+      "options": [
+        "對於陳情事件所為函覆",
+        "對於公職人員財產申報資料進行查詢",
+        "對於違規停放車輛實施拖吊保管",
+        "警察責令擅自變更電動二輪車燈光裝置車輛所有人限期改正"
+      ],
+      "id": "111-20",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 21,
+      "question": "甲繼承父親座落新北市未經合法登記，亦無合法建造執照及使用執照之房屋，新北市政府已以甲為受 文者寄發「違章建築拆除通知書」，逕認定該房屋為依法不得補辦建造執照手續之違章建築，將於該 通知書所載期日予以拆除。下列敘述何者錯誤？",
+      "options": [
+        "該「違章建築拆除通知書」係具有確認及下命性質之行政處分",
+        "甲如不服該「違章建築拆除通知書」，於系爭房屋未遭拆除前，可向內政部提起訴願",
+        "鄰人乙如發現該「違章建築拆除通知書」所記載房屋座落地址誤植為其所有房屋，於執行程序終結 前，得依行政執行法第9條向新北市政府聲明異議",
+        "承上，鄰人乙如主張該「違章建築拆除通知書」為無效行政處分，得逕向臺北高等行政法院提起確 認行政處分無效訴訟"
+      ],
+      "id": "111-21",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 22,
+      "question": "關於政府資訊公開之敘述，下列何者正確？",
+      "options": [
+        "人民請求政府機關提供之資訊，如已歸檔者則屬檔案法所稱之檔案，應優先適用政府資訊公開法處理",
+        "人民申請公開之資訊，如具檔案性質者，政府機關除得適用檔案法第18條規定外，亦得適用性質相 同之政府資訊公開法第18條第1項各款規定據以拒絕提供",
+        "政府資訊中含有限制公開或不予提供之事項，應予以全部遮蔽，採取防免揭露處置，以達到保密效果",
+        "人民申請提供之資訊包括涉及專門知識、技能或資格所為之考試、檢定或鑑定等有關資料，其公開 或提供將影響其公正效率之執行者，應全部不予提供"
+      ],
+      "id": "111-22",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 23,
+      "question": "建築法規定建築物所有權人、使用人應維護建築物合法使用與其構造及設備安全；違反前述義務或擅 自未經核准變更使用擅自使用建築物者，由直轄市或縣（市）政府處建築物所有權人、使用人新臺幣 6萬元以上30萬元以下罰鍰，並限期改善或補辦手續，屆期仍未改善或補辦手續而繼續使用者，得連 續處罰，並限期停止其使用。下列敘述何者錯誤？",
+      "options": [
+        "房屋出租後，承租人擅自變更房屋防火設計時，直轄市或縣（市）政府依據上開規定亦可對承租人 進行裁罰",
+        "經法院拍賣取得違章建築房屋之拍定人，依法仍負有維護建築物合法使用與其構造及設備安全之狀 態責任",
+        "違章建築所有權人未依直轄市或縣（市）政府所發拆除通知單自行拆除，僅對後續所發「違章建築 拆除時間通知單」提起訴願時，訴願機關應予不受理",
+        "違章建築承租人對於直轄市或縣（市）政府所為新臺幣6萬元罰鍰有所不服而向內政部提起訴願時， 應暫停罰鍰處分之執行"
+      ],
+      "id": "111-23",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 24,
+      "question": "關於行政罰之敘述，下列何者正確？",
+      "options": [
+        "中央或地方機關或其他公法組織違反行政法上義務者，不罰",
+        "於設有代表人或管理人之非法人團體，或法人以外之其他私法組織，違反行政法上義務者，不罰代 表人或管理人",
+        "違反行政法上義務應受法定最高額新臺幣5千元以下罰鍰之處罰，其情節輕微，認以不處罰為適當 者，得免予處罰",
+        "不屬於受處罰者所有之物，因所有人之故意或重大過失，致使該物成為違反行政法上義務行為之工 具者，仍得裁處沒入"
+      ],
+      "id": "111-24",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 25,
+      "question": "下列何者，相當於訴願程序？",
+      "options": [
+        "稅捐稽徵法規定之申請復查程序",
+        "學生申訴程序",
+        "政府採購爭議之審議判斷程序",
+        "公務員懲戒程序"
+      ],
+      "id": "111-25",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 26,
+      "question": "行政機關作成行政處分未記明理由時，下列敘述何者錯誤？",
+      "options": [
+        "未限制人民權益之書面行政處分，縱未記明理由，仍為有效",
+        "經公告或刊登政府公報或新聞紙之一般處分，無須記明理由",
+        "得不經訴願程序者，得於行政訴訟一審程序終結前，記明理由補正之",
+        "得於訴願程序終結前，記明理由補正之"
+      ],
+      "id": "111-26",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 27,
+      "question": "依現行法規定，下列何者得兼任黨職或公職候選人競選辦事處之職務？",
+      "options": [
+        "民意代表",
+        "公營事業對經營政策負有主要決策責任之人員",
+        "行政法人有給專任人員",
+        "各機關及公立學校依法聘用、僱用人員"
+      ],
+      "id": "111-27",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 28,
+      "question": "關於國家賠償之敘述，下列何者正確？",
+      "options": [
+        "國家負損害賠償責任者，以回復原狀為適當者，得依請求，回復損害發生前原狀",
+        "賠償請求權，自請求權人知有損害時起，因十年間不行使而消滅；自損害發生時起，逾十五年者亦同",
+        "國家賠償義務機關經裁撤或改組者，應以其上級機關為賠償義務機關",
+        "國家賠償法所稱公務員，限於依法任用之公務人員"
+      ],
+      "id": "111-28",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 29,
+      "question": "下列何者為裁量基準？",
+      "options": [
+        "海關緝私案件減免處罰標準",
+        "公務員請假規則",
+        "全民健康保險投保金額分級表",
+        "文書流程管理作業規範"
+      ],
+      "id": "111-29",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 30,
+      "question": "依現行法規定，下列何者不以地方行政法院為第一審管轄法院？",
+      "options": [
+        "關於內政部移民署之行政收容事件涉訟者",
+        "人民、地方自治團體或其他公法人認為行政機關依都市計畫法發布之都市計畫違法，而直接損害、 因適用而損害或在可預見之時間內將損害其權利或法律上利益者",
+        "因不服行政機關所為告誡、警告、記點、記次、講習、輔導教育或其他相類之輕微處分而涉訟者",
+        "關於公法上財產關係之訴訟，其標的之金額或價額在新臺幣50萬元以下"
+      ],
+      "id": "111-30",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 31,
+      "question": "關於法規命令之敘述，下列何者錯誤？",
+      "options": [
+        "內容應明列其法律授權之依據",
+        "內容不得逾越法律授權之範圍與立法精神",
+        "發布應刊登政府公報或新聞紙",
+        "一部分無效者，全部無效"
+      ],
+      "id": "111-31",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 32,
+      "question": "行政機關裁處罰鍰時，不問情節輕重，一律裁處法定罰鍰最高額，此裁量瑕疵稱為：",
+      "options": [
+        "裁量逾越",
+        "裁量濫用",
+        "裁量怠惰",
+        "裁量限縮至零"
+      ],
+      "id": "111-32",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 33,
+      "question": "依我國現行法制，下列何者非屬公法人？",
+      "options": [
+        "地方自治團體",
+        "行政法人",
+        "經中央原住民族主管機關核定之部落",
+        "公立大學"
+      ],
+      "id": "111-33",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 34,
+      "question": "下列何者屬於合議制機關？",
+      "options": [
+        "行政院",
+        "內政部",
+        "國家通訊傳播委員會",
+        "行政院農業委員會"
+      ],
+      "id": "111-34",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 35,
+      "question": "數行政機關於管轄權有爭議時，應如何處理？",
+      "options": [
+        "由其共同上級機關決定之",
+        "由行政法院決定之",
+        "由各該機關自行協議定之",
+        "由立法院決議定之"
+      ],
+      "id": "111-35",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 36,
+      "question": "關於公務人員復審之敘述，下列何者錯誤？",
+      "options": [
+        "公務人員對於服務機關或人事主管機關所為之行政處分，認為違法或不當，致損害其權利或利益者， 得提起復審",
+        "復審人應繕具復審書經由原處分機關向其直接上級機關提起復審",
+        "復審之提起，應自行政處分達到之次日起三十日內為之",
+        "不服復審決定者，得於決定書送達之次日起二個月內，依法向該管司法機關請求救濟"
+      ],
+      "id": "111-36",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 37,
+      "question": "關於無效行政處分之敘述，下列何者正確？",
+      "options": [
+        "自始不生效力",
+        "得依申請更正",
+        "得依職權廢止",
+        "得依申請補正"
+      ],
+      "id": "111-37",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 38,
+      "question": "下列何者非屬行政處分無效之原因？",
+      "options": [
+        "不能由書面處分中得知處分機關者",
+        "應以證書方式作成而未給予證書者",
+        "內容對任何人均屬不能實現者",
+        "應給予當事人陳述意見之機會而未給予者"
+      ],
+      "id": "111-38",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 39,
+      "question": "行政機關本於職權撤銷違法行政處分之期間限制，下列敘述何者正確？",
+      "options": [
+        "應自原處分機關或其上級機關知有撤銷原因時起二年內為之",
+        "應自撤銷原因發生後二年內為之",
+        "應自原處分機關或其上級機關知有撤銷原因時起五年內為之",
+        "應自撤銷原因發生後五年內為之"
+      ],
+      "id": "111-39",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 40,
+      "question": "關於公法上請求權之敘述，下列何者正確？",
+      "options": [
+        "於請求權人為行政機關時，除法律另有規定外，因十年間不行使而消滅",
+        "於請求權人為人民時，除法律另有規定外，因五年間不行使而消滅",
+        "不問請求權人為何，一律因十五年間不行使而消滅",
+        "公法上請求權，因時效完成而當然消滅"
+      ],
+      "id": "111-40",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 41,
+      "question": "關於行政指導之敘述，下列何者錯誤？",
+      "options": [
+        "行政機關為行政指導時，應注意相關法規規定之目的，不得濫用",
+        "相對人明確拒絕指導時，行政機關應即停止，並改採其他強制措施，促使相對人配合",
+        "行政機關應明示行政指導之目的、內容及負責指導者等事項",
+        "行政指導得以書面、言詞或其他方式為之"
+      ],
+      "id": "111-41",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 42,
+      "question": "關於公法上金錢給付義務之敘述，下列何者正確？",
+      "options": [
+        "行政契約所約定之給付不履行時，應移送法務部行政執行署所屬執行分署執行之",
+        "公法上金錢給付義務逾期不履行者，由原處分機關或該管行政機關執行之",
+        "義務人死亡遺有財產者，行政執行分署應參加遺產分配",
+        "行政執行，自處分、裁定確定之日或其他依法令負有義務經通知限期履行之文書所定期間屆滿之日 起，五年內未經執行者，不再執行"
+      ],
+      "id": "111-42",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 43,
+      "question": "下列敘述何者錯誤？",
+      "options": [
+        "一行為違反數個行政法上義務規定而應處罰鍰者，依法定罰鍰額最高之規定裁處",
+        "一行為違反社會秩序維護法及其他行政法上義務規定而應受處罰，如已裁處拘留者，得併處罰鍰",
+        "一行為同時觸犯刑事法律及違反行政法上義務規定者，依刑事法律處罰之",
+        "數行為違反同一或不同行政法上義務之規定者，分別處罰之"
+      ],
+      "id": "111-43",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 44,
+      "question": "應為送達之處所不明者，行政機關得為下列何種方式送達？",
+      "options": [
+        "公告送達",
+        "公示送達",
+        "補充送達",
+        "寄存送達"
+      ],
+      "id": "111-44",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 45,
+      "question": "關於送達之敘述，下列何者錯誤？",
+      "options": [
+        "除法規另有規定外，由人民申請為之",
+        "由行政機關自行或交由郵政機關送達",
+        "對於無行政程序之行為能力人為送達者，應向其法定代理人為之",
+        "對於機關、法人或非法人之團體為送達者，應向其代表人或管理人為之"
+      ],
+      "id": "111-45",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 46,
+      "question": "關於聽證之敘述，下列何者錯誤？",
+      "options": [
+        "聽證，除法律另有規定外，應公開以言詞為之",
+        "行政機關作成經聽證之行政處分時，除法規另有規定外，應依聽證紀錄作成處分",
+        "行政機關作成經聽證之行政處分，應以書面為之，並通知當事人",
+        "不服經聽證之行政處分者，其行政救濟程序，免除訴願及其先行程序"
+      ],
+      "id": "111-46",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 47,
+      "question": "依行政程序法之規定，下列何種程序，行政機關得依職權舉行聽證？",
+      "options": [
+        "訂定法規命令",
+        "訂定行政規則",
+        "實施行政指導",
+        "處理陳情"
+      ],
+      "id": "111-47",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 48,
+      "question": "請求國家損害賠償之訴，適用下列何者？",
+      "options": [
+        "民事訴訟法",
+        "刑事訴訟法",
+        "行政訴訟法",
+        "憲法訴訟法"
+      ],
+      "id": "111-48",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 49,
+      "question": "下列敘述何者錯誤？",
+      "options": [
+        "公共設施因設置或管理有欠缺，致人民生命、身體、人身自由或財產受損害者，國家應負損害賠償責任",
+        "公共設施委託民間團體或個人管理時，因管理欠缺致人民生命、身體、人身自由或財產受損害者， 國家不負損害賠償責任",
+        "自然公物，經管理機關已就使用該公物為適當之警告或標示，而人民仍從事冒險或具危險性活動， 國家不負損害賠償責任",
+        "自然公物內之設施，經管理機關已就使用該設施為適當之警告或標示，而人民仍從事冒險或具危險 性活動，得減輕或免除國家應負之損害賠償責任"
+      ],
+      "id": "111-49",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    },
+    {
+      "number": 50,
+      "question": "國家依法徵收人民之財產，應給予合理之補償。此項補償為下列何者？",
+      "options": [
+        "信賴補償",
+        "特別犧牲補償",
+        "社會補償",
+        "損害補償"
+      ],
+      "id": "111-50",
+      "year": "111",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "官方答案已核對；解析尚未逐題整理。"
+    }
+  ],
+  "113": [
+    {
+      "number": 1,
+      "question": "有關無效行政處分，下列敘述何者正確？",
+      "options": [
+        "自始不生效力，但例外時得使其向將來失效",
+        "行政機關得依職權向法院提起無效確認之訴",
+        "利害關係人有正當理由得請求確認無效與否",
+        "無效行政處分未經撤銷者，其效力繼續存在"
+      ],
+      "id": "113-01",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "行政處分無效之確認：利害關係人有正當理由時，得請求確認。 行政程序法第111條規範無效事由；無效處分自始不生效力。依第113條，利害關係人有正當理由得請求確認無效，並非由行政機關向法院提起確認之訴。"
+    },
+    {
+      "number": 2,
+      "question": "依我國司法實務見解，下列何者係屬行政處分？",
+      "options": [
+        "行政院依地方制度法認定地方議會通過自治條例為無效之函告",
+        "經認定為違建後，行政機關通知人民應自行拆除之日期通知單",
+        "學校性平會就校園性騷擾事件，所作成之調查報告及處理建議",
+        "人民違反道路交通管理處罰條例，由交通勤務警察所為之舉發"
+      ],
+      "id": "113-02",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "行政處分須為行政機關就公法上具體事件所為、對外直接發生法律效果之單方行政行為。 行政處分須由行政機關就公法上具體事件所為，並對外直接發生法律效果。地方自治條例被宣告無效的函告具有直接法律效果，與單純通知、調查報告或警察舉發等行為須依其性質區辨。"
+    },
+    {
+      "number": 3,
+      "question": "依工會法施行細則規定，廠場之工作場所，其獨立人事、預算及會計，應符合下列要件：「一、對於工作場 所勞工具有人事進用或解職決定權。二、編列及執行預算。三、單獨設立會計單位，並有設帳計算盈虧損。」 依憲法法庭判決意旨，上開規定牴觸下列何種原則？",
+      "options": [
+        "比例原則",
+        "平等原則",
+        "法律保留原則",
+        "正當法律程序原則"
+      ],
+      "id": "113-03",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "本題考憲法法庭對工會組織及法律保留的判斷。 本題考法律保留：限制工會組織及團結權的重要構成要件，應由法律或有明確授權的法規命令規定；施行細則不得自行增加法律未授權的實質限制。"
+    },
+    {
+      "number": 4,
+      "question": "依行政訴訟法，有關行政訴訟之和解，下列敘述何者錯誤？",
+      "options": [
+        "和解成立者，有確定力",
+        "當事人須就訴訟標的具有處分權",
+        "和解之範圍，限於與訴訟標的相關之事項",
+        "和解有得撤銷之原因者，當事人得請求繼續審判"
+      ],
+      "id": "113-04",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "行政訴訟和解成立具有確定力；撤銷和解有特別救濟規定。 行政訴訟法上的和解具有確定判決效力，並非僅限於訴訟標的本身；與訴訟標的相關且當事人有處分權的事項，也可能納入和解。和解有法定無效或得撤銷原因時，依特別程序救濟。"
+    },
+    {
+      "number": 5,
+      "question": "下列何種程序屬訴願先行程序之性質？",
+      "options": [
+        "公務人員保障法之復審程序",
+        "政府採購法之異議程序",
+        "教師法之再申訴程序",
+        "公務人員保障法之再申訴程序"
+      ],
+      "id": "113-05",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "政府採購異議屬於先行救濟程序的典型考點。 政府採購法異議、申訴是採購爭議的法定先行救濟程序；須依採購法規定先向招標機關提出異議，必要時再向採購申訴審議委員會申訴，與一般訴願程序不同。"
+    },
+    {
+      "number": 6,
+      "question": "下列何者不是行政事實行為？",
+      "options": [
+        "氣象報告之颱風預測",
+        "快速道路之施工行為",
+        "街道門牌之更名編定",
+        "地方政府之垃圾清運"
+      ],
+      "id": "113-06",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "門牌更名編定會直接形成法律效果，與單純事實行為不同。 行政事實行為原則上不直接形成法律效果，例如施工、清運、氣象資訊。門牌更名編定會確定地址識別，影響人民權利義務及法律關係，具有行政處分性質。"
+    },
+    {
+      "number": 7,
+      "question": "下列何種行為，並非行政程序法第92 條所稱之行政處分？",
+      "options": [
+        "匝道管制",
+        "建築線之指定",
+        "提供產業發展資訊",
+        "水源保護區之公告"
+      ],
+      "id": "113-07",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "單純提供資訊通常不直接發生法律效果，非行政處分。 行政處分要有對外直接法律效果。單純提供產業資訊屬事實通知或資訊提供，通常不直接設定、變更或消滅人民公法上權利義務，因此不是行政程序法第92條的行政處分。"
+    },
+    {
+      "number": 8,
+      "question": "有關公共設施委託民間團體管理時，其國家賠償責任之成立與責任歸屬問題，下列敘述何者正確？",
+      "options": [
+        "由受委託民間團體自負國賠責任",
+        "就損害原因有應負責任之人時，由受損害人民對其主張國賠責任",
+        "於開放水域，該民間團體就使用該公物為適當警告，而人民仍從事危險性活動，國家不負國賠責任",
+        "於開放之山域內之設施，該民間團體就使用該設施為適當警告，而人民仍從事冒險性活動，國家不負國 賠責任"
+      ],
+      "id": "113-08",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "公共設施委託管理及開放水域、山域的國賠責任有特別規範。 公共設施委託民間管理時，國家賠償責任不當然因委託而消失；仍須依國家賠償法及公共設施管理規範判斷。開放水域如已適當警告，而人民仍從事具高度危險活動，法律設有責任減免的特別規定。"
+    },
+    {
+      "number": 9,
+      "question": "下列何者並不屬於有關公物一般使用之設定？",
+      "options": [
+        "因消防隊救火需要而排除私人路障",
+        "將私人所有之老宅指定為歷史古蹟",
+        "因應交通尖峰時段所為之調撥車道",
+        "將私人加油站所設廁所指定為公廁"
+      ],
+      "id": "113-09",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "公物一般使用設定與排除障礙、古蹟指定等概念需區辨。 公物一般使用是人民依公物目的通常使用。消防救火時排除私人路障，是排除妨害、執行公權力的事實措施，不是設定公物一般使用；指定古蹟、公廁等則涉及特定公物或公共使用關係。"
+    },
+    {
+      "number": 10,
+      "question": "下列何者為行政處分？",
+      "options": [
+        "聽證程序主持人對於當事人聲明異議所為之駁回",
+        "行政機關基於職權對特定當事人依法所為之送達",
+        "行政機關進行權限委託時向其他機關所為之委託",
+        "土地主管機關就不動產交易之標的物所為之登記"
+      ],
+      "id": "113-10",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "不動產登記的法律性質須依其具體法規及效果判斷。 不動產登記不是單純內部作業；登記機關依法律審查並作成登記，會發生公法上的法律效果。判斷行政處分應看是否對外直接發生法律效果，而非名稱是否為通知或登記。"
+    },
+    {
+      "number": 11,
+      "question": "有關公營造物利用關係之敘述，下列何者錯誤？",
+      "options": [
+        "其利用關係，得基於營造物利用規則而生",
+        "其利用型態，得為公法利用關係或私法利用關係",
+        "基於對內有家主權，而得排除檢調或司法人員之進入",
+        "其利用型態，基本上由法規或公營造物主體裁量定之"
+      ],
+      "id": "113-11",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "公營造物管理權並非可概括排除檢調或司法機關依法執行職務。 公營造物管理者得依利用規則維持秩序，但所謂家主權不是無限制的排除權。檢察、司法或警察機關依法執行職務時，管理者不得僅以內部管理權概括拒絕。"
+    },
+    {
+      "number": 12,
+      "question": "有關行政罰與管制性不利處分之比較，下列敘述何者錯誤？",
+      "options": [
+        "管制性不利處分不受裁罰權時效之限制",
+        "只有裁罰性不利處分適用處罰法定原則",
+        "相對於行政罰，管制性不利處分對人民權利影響較輕微",
+        "機關對裁罰性不利處分應依行為受責難程度、所生影響及所獲得不法利得決定之"
+      ],
+      "id": "113-12",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "行政罰與管制性不利處分的目的、要件及法律原則應分別判斷。 行政罰是對過去違反行政法義務行為的制裁；管制性不利處分則以預防危險、回復合法狀態為目的。管制措施未必比行政罰對權利影響輕微，仍須依法律保留、比例原則等審查。"
+    },
+    {
+      "number": 13,
+      "question": "依行政罰法規定與我國學理，無論法律或自治條例，均可作為處罰之依據。下列與此相關之敘述，何者錯誤？",
+      "options": [
+        "此處所稱之法律，包括符合授權明確性原則之法規命令",
+        "此處所稱之自治條例，不包括職業團體內部之自治規章",
+        "此處所稱之法律，不包括具有間接對外效力之行政規則",
+        "此處所稱之自治條例，包括與大學自治相關之自治規章"
+      ],
+      "id": "113-13",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "本題考處罰法定及法律、自治條例的規範範圍。 行政罰法第4條要求處罰須有法律或自治條例依據；授權明確的法規命令得在授權範圍內具體化處罰規定。職業團體或大學自治規章不當然等同自治條例，不能任意擴張處罰法源。"
+    },
+    {
+      "number": 14,
+      "question": "有關公務員責任之敘述，下列何者正確？",
+      "options": [
+        "行政懲處與司法懲戒併行制度違憲",
+        "同一行為，不受懲戒法院二次懲戒",
+        "對懲戒法庭判決不服者，得另向行政法院起訴",
+        "對政務官嚴重違法失職行為，得予以行政懲處"
+      ],
+      "id": "113-14",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "公務員懲戒與行政懲處的競合及一事不再理是本題核心。 行政懲處與司法懲戒的性質、目的及法定程序不同，制度上得有一定程度併行。不能把『同一行為不得二次懲戒』誤解為所有行政懲處與司法懲戒一律不得併存；本題要辨明懲戒法院的法定權限與救濟。"
+    },
+    {
+      "number": 15,
+      "question": "依政府資訊公開法，有關政府資訊應否公開之敘述，下列何者錯誤？",
+      "options": [
+        "政府機關以預算補助特定企業之補助金等相關資訊，應主動公開",
+        "牽涉國防預算之資訊，如經依法核定為國家機密者，得不主動公開",
+        "屬於書面之公共工程及採購契約者，如：臺北大巨蛋，應主動公開",
+        "合議制機關之會議紀錄，如：內政部都市計畫委員會，應主動公開"
+      ],
+      "id": "113-15",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": [
+        "B",
+        "D"
+      ],
+      "source": "MOEX PDF",
+      "explanation": "官方備註：本題答 B 或 D 均給分。 政府資訊公開法第6條等規定要求主動公開特定資訊，但國家機密、個人隱私及合議制機關會議紀錄等另有例外或限制。本題官方公告 B、D 均給分，複習時以官方更正為準，不宜只背單一選項。"
+    },
+    {
+      "number": 16,
+      "question": "甲因貪圖免費享用壽司，配合店家宣傳廣告而改名為有魚部首之名字。當甲後悔欲申請改名時，主管機關 認為其符合姓名條例第 9 條第 1 項第 6 款之特殊原因，得申請改名。前開規定中所稱之「特殊原因」，係 屬於下列何種行政法之概念？",
+      "options": [
+        "判斷餘地",
+        "裁量餘地",
+        "裁量基準",
+        "不確定法律概念"
+      ],
+      "id": "113-16",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "不確定法律概念是法律要件用語需經解釋、涵攝的概念。 『特殊原因』是法律構成要件中的不確定法律概念，須先解釋其意義，再將個案事實涵攝其中；不是行政機關在數個合法方案間自由選擇的裁量權。"
+    },
+    {
+      "number": 17,
+      "question": "有關行政處分與行政契約之比較，下列敘述何者正確？",
+      "options": [
+        "基於契約之相對性，行政契約無從產生對第三人之拘束效力",
+        "信賴保護原則之適用對象範圍，包括行政處分與行政契約之相對人",
+        "具有對第三人效力之行政處分，其效力之發生繫於第三人之事前同意",
+        "行政契約或行政處分，其對第三人效力之有無，均以法規有明定為前提"
+      ],
+      "id": "113-17",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "信賴保護原則可適用於行政處分及行政契約的相對人。 信賴保護不只可能出現在授益行政處分，也可能適用於行政契約相對人。行政契約仍受誠信、平等及依法行政等公法原則拘束，不能因契約形式就排除信賴保護。"
+    },
+    {
+      "number": 18,
+      "question": "行政機關於颱風侵襲期間，為避免緊急危險，引水進入尚未完工之分洪隧道，應屬於下列何種概念之行政 措施？",
+      "options": [
+        "定暫時狀態之假處分",
+        "維護人民生命財產之保全處分",
+        "防止損害擴大之暫時性行政處分",
+        "行政執行法上之即時強制"
+      ],
+      "id": "113-18",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "即時強制是為排除現在急迫危險而採取的即時措施。 行政執行法第36條以下的即時強制，是為排除現在急迫危害，於必要時即時對人或物採取措施；不以先作成行政處分或完成一般執行程序為必要，但仍受必要性及比例原則限制。"
+    },
+    {
+      "number": 19,
+      "question": "下列何者為具有法效性之單方行政行為？",
+      "options": [
+        "具對第三人效力之行政處分",
+        "具間接對外效力之行政指導",
+        "不須第三人同意之行政契約",
+        "具可代替性之行政事實行為"
+      ],
+      "id": "113-19",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "行政處分是具有法效性的單方行政行為。 行政處分是行政機關單方作成、直接發生公法效果的行政行為。行政指導通常不具法律拘束力；行政契約則以雙方合意為基礎；事實行為本身也不以法律效果為必要。"
+    },
+    {
+      "number": 20,
+      "question": "有關行政罰之敘述，下列何者正確？",
+      "options": [
+        "裁罰性之不利處分，亦包括強制拆除",
+        "警告性處分只是單純警告，並不屬於行政罰",
+        "行為後法律有變更者，適用最初行為時之法律",
+        "公布違法者之姓名，影響其權益輕微，無須適用法律保留原則"
+      ],
+      "id": "113-20",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "警告性處分是否屬行政罰，須依其是否具裁罰性判斷。 行政罰須具有裁罰性。強制拆除若目的在排除違法狀態、回復合法秩序，通常屬管制或行政執行措施，不因對人民不利就當然是行政罰；仍應依措施目的及法律性質判斷。"
+    },
+    {
+      "number": 21,
+      "question": "關於行政契約，下列敘述何者正確？",
+      "options": [
+        "因行政契約之性質屬於公法契約，故不得準用民法之相關規定",
+        "契約締結後如有情事重大變更，當事人之一方得依法終止契約",
+        "準用民法規定之結果雖為無效，但依行政程序法並不當然無效",
+        "如無自願接受執行約定，得準用民事訴訟法有關強制執行規定"
+      ],
+      "id": "113-21",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "行政程序法對情事重大變更設有調整或終止契約的規範。 行政程序法第147條處理行政契約成立後情事重大變更：若依原約定顯失公平，當事人得請求調整或終止。行政契約並非完全排除民法規定，法律也設有準用規則。"
+    },
+    {
+      "number": 22,
+      "question": "有關行政契約與行政法一般原則之敘述，下列何者正確？",
+      "options": [
+        "公法上法律關係得以行政契約設定、變更或消滅之，並不適用法律優位原則",
+        "基於私法自治原則之授權，公法上法律關係得以行政契約設定、變更或消滅之",
+        "依其性質或法規規定雖不得締結行政契約，但該契約約款仍應適用比例原則",
+        "以甄選方式決定當事人，應事先公告應具之資格，係落實正當法律程序原則"
+      ],
+      "id": "113-22",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "行政契約仍受依法行政等一般原則拘束；甄選公告涉及程序正當性。 行政契約雖以合意成立，仍受法律優位、法律保留、比例及正當程序等公法原則拘束。以甄選方式選定契約相對人，事先公告資格與標準，是程序透明及公平的重要要求。"
+    },
+    {
+      "number": 23,
+      "question": "依行政程序法之規定，有關人民向行政機關提出之陳情，下列敘述何者正確？",
+      "options": [
+        "行政機關對人民之陳情，應訂定作業規定，組成陳情處理委員會迅速、確實回應",
+        "以言詞為陳情者，受理機關得不作成紀錄，即時處理並作成暫時性保全行政處分",
+        "陳情之事項，屬於得提起訴願、訴訟或請求國家賠償者，陳情人仍得依法提起之",
+        "人民之陳情雖有保密之必要，但受理機關處理時，得依據職權基於公益予以公開"
+      ],
+      "id": "113-23",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "提出陳情不妨礙人民依法提起訴願、訴訟或請求國家賠償。 人民陳情不會取代法定救濟。即使機關受理陳情，若事項本來可以提起訴願、行政訴訟或請求國家賠償，人民仍須遵守各該法定要件及期間。"
+    },
+    {
+      "number": 24,
+      "question": "關於法規命令與行政規則之比較，下列敘述何者正確？",
+      "options": [
+        "均得依職權舉行聽證訂定",
+        "均須先於政府公報發布之",
+        "均得依人民之提議訂定之",
+        "均得為行政法之成文法源"
+      ],
+      "id": "113-24",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "法規命令與行政規則的對外效力、訂定程序及法源地位不同。 行政法法源包含成文法規及一定範圍內的行政法一般原則、習慣法等。行政規則通常拘束機關內部，但可能透過平等原則、自我拘束等方式間接影響外部；須區分其直接法規效力與間接外部效果。"
+    },
+    {
+      "number": 25,
+      "question": "有關行政機關之授權與裁量權，下列敘述何者正確？",
+      "options": [
+        "非授予利益合法行政處分，得由原處分機關依職權裁量廢止",
+        "依法規授權予私人行使公權力時，該私人並得制定法規命令",
+        "行政機關締結行政契約時，須以法規已事先明確授權為前提",
+        "行政機關有裁量權時，得授權私人與其他私人締結行政契約"
+      ],
+      "id": "113-25",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "行政處分的廢止須區分授益與非授益處分及法定要件。 行政程序法第123條規範合法授益行政處分的廢止；非授益處分的撤銷、廢止須依不同條文及要件判斷。題目用語要分清『撤銷』通常針對違法處分溯及失效，『廢止』通常針對合法處分向將來失效。"
+    },
+    {
+      "number": 26,
+      "question": "下列何者不屬於行政處分之附款？",
+      "options": [
+        "保留負擔之事後附加",
+        "保留負擔之事後變更",
+        "保留行政處分之廢止權",
+        "保留行政處分之撤銷權"
+      ],
+      "id": "113-26",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "附款類型包括期限、條件、負擔、保留廢止權及保留事後附加或變更負擔等。 行政處分附款包括期限、條件、負擔、保留廢止權，以及保留事後附加或變更負擔。『保留撤銷權』不是法定附款類型；撤銷與廢止的法律原因及效力不同。"
+    },
+    {
+      "number": 27,
+      "question": "下列何者為行政事實行為？",
+      "options": [
+        "警察分局長下令違法集會之群眾解散",
+        "內政部訂定治安顧慮人口查訪辦法",
+        "軍事學校對其學生所為之退學處分",
+        "警校對其新生實施入學前之預備教育"
+      ],
+      "id": "113-27",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "預備教育屬實際執行活動，通常為行政事實行為。 行政事實行為是行政機關實際執行活動，通常不直接發生法律效果。警校對新生實施入學前預備教育是實際教育訓練；退學處分、命令解散及訂定法規則各有不同法律性質。"
+    },
+    {
+      "number": 28,
+      "question": "下列何者係以高等行政法院高等行政訴訟庭為第一審管轄法院？",
+      "options": [
+        "交通裁決事件",
+        "收容聲請事件",
+        "都市計畫審查事件",
+        "不服行政機關所為新臺幣 1 百萬元之罰鍰事件"
+      ],
+      "id": "113-28",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "都市計畫審查事件有專屬管轄規定。 都市計畫審查事件依行政訴訟法特別規定，由高等行政法院高等行政訴訟庭為第一審管轄。交通裁決、收容聲請及一般罰鍰案件則各有不同的專屬或通常管轄規則。"
+    },
+    {
+      "number": 29,
+      "question": "應公務人員考試錄取參加基礎訓練之人員，如不服公務人員保障暨培訓委員會所為廢止受訓資格之行政處 分，應如何救濟？",
+      "options": [
+        "向公務人員保障暨培訓委員會提起復審",
+        "向考試院提起訴願",
+        "向原分發機關之上級機關提起訴願",
+        "向受訓機關之上級機關提起訴願"
+      ],
+      "id": "113-29",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "應依作成行政處分機關及其法定救濟體系判斷。 不服保訓會作成的受訓資格廢止處分，救濟應依公務人員保障及訴願制度的法定管轄判斷。本題答案為向考試院提起訴願；不要只按受訓地點或原分發機關推定管轄。"
+    },
+    {
+      "number": 30,
+      "question": "下列何者並非行政罰法明定之阻卻違法事由？",
+      "options": [
+        "依法令之行為",
+        "依所屬上級公務員職務命令之行為",
+        "不可抗力之行為",
+        "緊急避難之行為"
+      ],
+      "id": "113-30",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "行政罰法第11、12條等規定列有依法令及緊急避難等阻卻違法事由。 行政罰法明定的阻卻違法事由包括依法令行為、依上級公務員職務命令行為、正當防衛及緊急避難等。不可抗力可能影響故意過失或責任成立，但不是本題所問的法定阻卻違法事由選項。"
+    },
+    {
+      "number": 31,
+      "question": "下列有關損失補償責任之敘述，何者正確？",
+      "options": [
+        "依警察職權行使法規定，人民有可歸責之事由時，不予補償",
+        "依行政執行法規定，有可歸責於該人民之事由者，法院得減免補償金額",
+        "依警械使用條例規定，有可歸責該第三人之事由時，得減輕或免除補償金額",
+        "依行政程序法規定，廢止授予利益之合法行政處分，對受益人因信賴該處分致遭受財產上之損失，均不 予補償"
+      ],
+      "id": "113-31",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "警械使用條例的損失補償，須注意可歸責第三人的效果。 警械使用造成特別犧牲時，依警械使用條例及相關規定處理損失補償；若損害發生可歸責於第三人，得依法減輕或免除補償。須區分國家賠償的違法責任與合法公權力行使的損失補償。"
+    },
+    {
+      "number": 32,
+      "question": "受理訴願機關不得為下列何種決定？",
+      "options": [
+        "不受理",
+        "在訴願人表示不服之範圍內，逕為加重處罰之變更",
+        "發回原行政處分機關另為處分",
+        "針對課予義務訴願，指定相當期間，命應作為之機關速為一定之處分"
+      ],
+      "id": "113-32",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "訴願決定不得在訴願人不服範圍內作更不利益變更。 訴願法禁止不利益變更：原處分相對人提起訴願時，訴願機關原則上不得在其不服範圍內加重處分。這是保障人民救濟權，避免因提起救濟反而處境更差。"
+    },
+    {
+      "number": 33,
+      "question": "行政法人對於其監督機關所為之行政處分，如認為違法或不當，致損害其權利或利益時，如何救濟？",
+      "options": [
+        "不得提起救濟",
+        "得提起申訴",
+        "得提起訴願",
+        "得提起復審"
+      ],
+      "id": "113-33",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "行政法人與監督機關間的行政處分，得依訴願制度救濟。 行政法人雖具公法人地位，與監督機關間若發生監督機關對其作成行政處分的情形，依法得循訴願途徑救濟。需留意行政法人不是一般私人法人，也不是公務員個人。"
+    },
+    {
+      "number": 34,
+      "question": "下列有關行政救濟時效之敘述，何者正確？",
+      "options": [
+        "訴願之提起，應自行政處分達到或公告期滿之日起 30 日內為之",
+        "人民提起訴願，如受理訴願機關於 2 個月內不為決定時，得逕向行政法院提起行政訴訟",
+        "課予義務訴訟之提起，原則上應於訴願決定書送達後 3 個月之不變期間內為之",
+        "依行政訴訟法提起之抗告，應於裁定送達後 10 日之不變期間內為之"
+      ],
+      "id": "113-34",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "行政訴訟抗告期間為裁定送達後10日的不變期間。 行政訴訟法規定，對裁定提起抗告，原則上應於裁定送達後10日的不變期間內提出。訴願及課予義務訴訟另有不同期間，考試常以30日、2個月及3個月作混淆。"
+    },
+    {
+      "number": 35,
+      "question": "下列有關國家賠償法制之敘述，何者正確？",
+      "options": [
+        "國家賠償法所稱公務員，僅限於依公務人員任用法任用之人員",
+        "於開放之山域自然公物內之公共設施，經管理機關已就使用該設施為適當之警告或標示，而人民仍從事 冒險或具危險性活動，致其身體或財產遭受損害時，國家仍應負完全之損害賠償責任",
+        "警察人員執行職務違法使用警械，致侵害人民自由或權利時，不適用國家賠償法賠償",
+        "警察人員執行職務如因重大過失違法使用警械，賠償義務機關不得向其求償"
+      ],
+      "id": "113-35",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "國賠法及警械使用條例涉及賠償義務機關對故意或重大過失人員的求償。 警察違法使用警械致人民權利受侵害，仍可能成立國家賠償；賠償義務機關對有故意或重大過失的公務員，依法可能有求償權。應區分國家對人民的外部賠償責任與機關對公務員的內部求償。"
+    },
+    {
+      "number": 36,
+      "question": "有關公務員之懲戒，下列敘述何者正確？",
+      "options": [
+        "受撤職處分者，撤其現職，並於一定期間停止任用；其期間為 6 個月以上、5 年以下",
+        "同一行為已受刑罰或行政罰之處罰者，不得予以懲戒",
+        "監察院對薦任第 9 職等以上之公務員，得逕予懲戒",
+        "同一行為經主管機關為行政懲處處分後，復經懲戒法院為不受懲戒之判決確定者，原行政懲處處分失其 效力"
+      ],
+      "id": "113-36",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "同一行為的行政懲處與懲戒程序關係，須依懲戒法規定判斷。 公務員懲戒與行政懲處不是完全相同的制度。題目涉及懲戒法院判決確定後，行政懲處的效力如何處理，應依公務員懲戒法的特別規定判斷，不能直接套用刑事一事不再理。"
+    },
+    {
+      "number": 37,
+      "question": "有關行政執行法之管收，下列敘述何者正確？",
+      "options": [
+        "由行政執行官逕行裁定之",
+        "不服管收之裁定，得提起抗告",
+        "管收期限最長為 5 年",
+        "義務人所負公法上金錢給付義務，得因管收執行完畢而免除"
+      ],
+      "id": "113-37",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "管收裁定的救濟方式為抗告。 管收須由法院裁定，行政執行機關不能自行作成管收裁定；對管收裁定不服得依法抗告。管收是確保行政執行的手段，不代表公法上金錢給付義務因管收而消滅。"
+    },
+    {
+      "number": 38,
+      "question": "依行政程序法規定，公法上之請求權如請求權人為人民時，原則上因多久期間不行使而消滅？",
+      "options": [
+        "15 年",
+        "10 年",
+        "5 年",
+        "3 年"
+      ],
+      "id": "113-38",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "行政程序法第131條：人民對行政機關之公法上請求權，原則上為10年。 行政程序法第131條規定，人民對行政機關的公法上請求權，原則上因10年間不行使而消滅；行政機關對人民的公法上請求權另有規範。題目問請求權人為人民，答案是10年。"
+    },
+    {
+      "number": 39,
+      "question": "下列何者非屬行政罰法所定之處罰種類？",
+      "options": [
+        "罰款",
+        "命令停工",
+        "命令解散",
+        "公布姓名"
+      ],
+      "id": "113-39",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "行政罰法的處罰種類包含罰鍰、沒入及其他裁罰性不利處分；本題依官方答案為 A。 行政罰法列舉的法定處罰名稱是『罰鍰』，不是口語常說的『罰款』。停工、解散或公布姓名可能依個別法律構成其他裁罰性不利處分；本題依官方答案選 A，關鍵在法定用語。"
+    },
+    {
+      "number": 40,
+      "question": "下列何者應適用行政程序法之程序規定？",
+      "options": [
+        "刑事案件犯罪偵查程序",
+        "犯罪矯正機關為達成收容目的所為之行為",
+        "對於公務人員所為一次記二大過之免職處分",
+        "考試院有關考選命題及評分之行為"
+      ],
+      "id": "113-40",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "公務人員一次記二大過免職的程序適用問題，為本題考點。 行政程序法有若干適用除外事項，例如刑事偵查、矯正機關達成收容目的的行為，以及考試院考選命題評分等。公務人員一次記二大過免職屬對外影響身分權益的措施，仍須注意程序保障。"
+    },
+    {
+      "number": 41,
+      "question": "下列有關地方自治法規之敘述，何者正確？",
+      "options": [
+        "自律規則由各該地方行政機關發布，並報各該上級政府備查",
+        "自治條例與基於法律授權之法規牴觸者，無效",
+        "剝奪或限制地方自治團體居民之權利義務者，得以自治規則定之",
+        "委辦規則毋須函報委辦機關核定"
+      ],
+      "id": "113-41",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "自治條例與上位法規牴觸的效力，以及自治規則的規範事項是重點。 地方制度法區分自治條例、自治規則、自律規則及委辦規則。自治條例與法律或基於法律授權的法規牴觸時，依地方制度法處理其效力；限制居民權利義務原則上不能只靠自治規則。"
+    },
+    {
+      "number": 42,
+      "question": "有關行政法人之敘述，下列何者錯誤？",
+      "options": [
+        "屬公法人之性質",
+        "國家太空中心屬之",
+        "地方自治團體均不得設立行政法人",
+        "不服行政法人之行政處分，得向監督機關提起訴願"
+      ],
+      "id": "113-42",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "地方自治團體依法得設立行政法人，並非一律不得。 行政法人是依法設立、執行公共任務的公法人；地方自治團體在法律授權範圍內也得設立行政法人，因此不能說地方自治團體一律不得設立。行政法人行政處分的救濟另依監督及訴願規範處理。"
+    },
+    {
+      "number": 43,
+      "question": "下列何者非屬公務員服務法適用之對象？",
+      "options": [
+        "現役軍人",
+        "公營事業機構純勞工以外之人員",
+        "中央研究院兼任行政職務之研究技術人員",
+        "中央警察大學未兼任行政職務之教授"
+      ],
+      "id": "113-43",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "服務法適用對象須依身分及是否兼任行政職務判斷。 公務員服務法適用範圍須依法律所定身分判斷。中央警察大學未兼任行政職務的教授，不因任職於警察大學就當然成為服務法適用對象；兼任行政職務則須另行判斷。"
+    },
+    {
+      "number": 44,
+      "question": "直轄市山地原住民區之性質為何？",
+      "options": [
+        "公法人",
+        "行政法人",
+        "行政機關",
+        "行政單位"
+      ],
+      "id": "113-44",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "直轄市山地原住民區具有地方自治團體地位，屬公法人。 直轄市山地原住民區具有地方自治團體地位，依法為公法人，享有自治及自治財政等法定權限。不要與行政法人、行政機關或機關內部行政單位混淆。"
+    },
+    {
+      "number": 45,
+      "question": "下列何者非屬行政單位？",
+      "options": [
+        "臺北市政府警察局保安警察大隊",
+        "新北市政府警察局板橋分局板橋派出所",
+        "內政部警政署行政組",
+        "內政部警政署勤務指揮中心"
+      ],
+      "id": "113-45",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "行政單位與行政機關的組織法定位需區分；本題依官方答案為 A。 行政機關內部的行政單位通常不具獨立對外行使公權力及作成行政處分的組織地位；大隊等編制是否為機關或單位，應依組織法規及編制判斷。本題依官方答案選 A。"
+    },
+    {
+      "number": 46,
+      "question": "下列有關公權力行政之敘述，何者錯誤？",
+      "options": [
+        "又稱高權行政",
+        "不得以行政契約方式為之",
+        "適用公法規定所為之行政行為",
+        "其救濟途徑為行政爭訟與國家賠償程序"
+      ],
+      "id": "113-46",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "公權力行政並非一概不得以行政契約方式進行。 公權力行政又稱高權行政，原則上適用公法並受行政爭訟及國家賠償制度規範，但不代表只能用單方行政處分。法律允許時，公權力行政也可能透過行政契約實現。"
+    },
+    {
+      "number": 47,
+      "question": "下列有關私經濟行政之敘述，何者錯誤？",
+      "options": [
+        "又稱國庫行政",
+        "公營事業機構之營利行為屬之",
+        "警察機關與廠商簽訂警槍採購契約不屬之",
+        "遇有爭議應循民事訴訟程序處理"
+      ],
+      "id": "113-47",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "C",
+      "source": "MOEX PDF",
+      "explanation": "行政機關採購契約通常屬私經濟行政，選項敘述需對照契約性質。 私經濟行政又稱國庫行政，包含政府以私法方式從事採購、營利或財產管理。警察機關與廠商簽訂警槍採購契約，通常是政府採購的私法契約，故說『不屬之』是錯誤敘述。"
+    },
+    {
+      "number": 48,
+      "question": "依層級化法律保留理論及司法院大法官解釋意旨，有關公務人員保險金請求權之消滅時效，係屬下列何者？",
+      "options": [
+        "憲法保留",
+        "絕對法律保留",
+        "相對法律保留",
+        "非屬法律保留"
+      ],
+      "id": "113-48",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "B",
+      "source": "MOEX PDF",
+      "explanation": "涉及公務人員保險給付請求權消滅時效的法律保留層級。 公務人員保險給付請求權的消滅時效涉及人民（公務人員）重要財產權及權利行使期限，依層級化法律保留理論，應由法律明定，屬絕對法律保留的重要考點。"
+    },
+    {
+      "number": 49,
+      "question": "合目的性原則係屬下列何者？",
+      "options": [
+        "適當性原則",
+        "必要性原則",
+        "狹義比例原則",
+        "法益衡量原則"
+      ],
+      "id": "113-49",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "A",
+      "source": "MOEX PDF",
+      "explanation": "合目的性對應比例原則中的適當性原則。 比例原則中的適當性原則，又稱合目的性或適合性：所採手段必須有助於達成行政目的。必要性要求有多種同樣有效手段時選擇侵害最小者；狹義比例則衡量利益與損害。"
+    },
+    {
+      "number": 50,
+      "question": "下列何者之信賴利益值得保護？",
+      "options": [
+        "以詐欺方法，使行政機關作成行政處分者",
+        "對重要事項提供不正確資料，致使行政機關依該資料而作成行政處分者",
+        "對重要事項為不完全陳述，致使行政機關依該陳述而作成行政處分者",
+        "因輕微過失而不知行政處分違法者"
+      ],
+      "id": "113-50",
+      "year": "113",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": "D",
+      "source": "MOEX PDF",
+      "explanation": "信賴保護須考量受益人是否明知或因重大過失而不知處分違法。 行政程序法第119條列出信賴不值得保護的情形，包括以詐欺、脅迫或賄賂取得處分、對重要事項提供不正確或不完全資料，以及明知或因重大過失而不知處分違法。僅有輕微過失而不知違法，尚非當然排除信賴保護。"
+    }
+  ],
+  "115": [
+    {
+      "number": 1,
+      "question": "某鄉鎮公所為解決假日夜市攤販噪音擾民問題，未曾嘗試以限制營業時間、劃定攤位區域或要求裝設 隔音設備等較緩和之方式處理，即逕行下令該夜市於未來三個月內全面禁止在轄區內營業。若存在其 他對人民權益侵害較輕、且同樣能達成維護居民生活安寧目的之替代手段，此一決定最可能牴觸下列 何項原則？",
+      "options": [
+        "信賴保護原則",
+        "誠實信用原則",
+        "比例原則",
+        "行政自我拘束原則"
+      ],
+      "id": "115-01",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 2,
+      "question": "依司法院釋字第443 號解釋，有關法律保留原則「層級化」之說明，下列敘述何者錯誤？",
+      "options": [
+        "剝奪人民生命或限制人民身體自由者，應以制定法律之方式為之，並須符合罪刑法定主義",
+        "涉及人民其他自由權利之限制者，亦應有法律之依據，惟得視限制內容之輕重，以法律或法律具體 明確授權之命令予以規範",
+        "執行法律之細節性、技術性次要事項，與人民權利義務無直接關涉者，得由主管機關發布命令為必 要之規範",
+        "給付行政措施關涉人民權利義務者，一律不得以命令定之，僅得以法律定之"
+      ],
+      "id": "115-02",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 3,
+      "question": "法律規定主管機關得依違規情節，處新臺幣 5 萬元以上 50 萬元以下罰鍰。主管機關訂定裁罰基準時， 明定凡首次違規者一律處以 50 萬元罰鍰，承辦人員審核時亦不再就個案違規動機、情節輕重、造成 損害大小等因素為任何審酌。此種一律從重處罰、不審酌個案情節之作法，最可能構成何種裁量瑕疵？",
+      "options": [
+        "判斷餘地",
+        "裁量逾越",
+        "裁量怠惰",
+        "裁量限縮至零"
+      ],
+      "id": "115-03",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 4,
+      "question": "某鄉公所因既有辦公廳舍老舊不堪使用，另以一般房屋租賃契約方式，向轄區內一民間企業承租辦公 處所供公所人員辦公使用。嗣後雙方因租金調整幅度發生爭執。關於此一法律關係之性質，下列敘述 何者最為適當？",
+      "options": [
+        "該租賃契約性質上屬於行政處分，相對人如有不服應先提起訴願",
+        "屬於私經濟行政之範疇，相關租金爭議原則上循民事訴訟途徑解決",
+        "屬法規命令性質，應循聲請憲法審查途徑解決",
+        "因契約當事人一方為行政機關，故該租賃關係當然屬於公法關係"
+      ],
+      "id": "115-04",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 5,
+      "question": "甲部會依法規將其部分權限，委託不相隸屬之乙機關執行，並將委託事項及法規依據公告之。此種權 限移轉方式，於行政程序法上稱為何者？",
+      "options": [
+        "委任",
+        "委託",
+        "行政委託",
+        "職務協助"
+      ],
+      "id": "115-05",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 6,
+      "question": "依國家賠償法規定，下列何者最符合該法所稱「公務員」之概念？",
+      "options": [
+        "依法令從事於公務之人員，不以任用法上公務人員為限",
+        "僅限依公務人員任用法任用之現職人員",
+        "僅限具有官等、職等之人員",
+        "僅限中央行政機關之人員"
+      ],
+      "id": "115-06",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 7,
+      "question": "關於公務員之懲戒責任，下列敘述何者正確？",
+      "options": [
+        "同一行為一旦受刑事處罰，即不得再予懲戒",
+        "同一行為已受行政罰處罰者，即不得再予懲戒",
+        "同一行為得由懲戒法院重複作成二次懲戒",
+        "行政懲處與司法懲戒之處分機關及法律效果均有不同"
+      ],
+      "id": "115-07",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 8,
+      "question": "依行政程序法規定，下列有關「法規命令」之敘述，何者錯誤？",
+      "options": [
+        "法規命令之規範對象僅須為不特定多數人，至其得否具體特定，尚非所問，倘規範對象係可得確定 之特定人，仍無礙於法規命令性質之認定",
+        "法規命令之訂定，除依法律或法規另有規定外，應於預告草案時，將訂定機關、依據、草案全文或 其主要內容及提出意見或申請之期限，登載於政府公報或新聞紙",
+        "法律授權訂定命令者，如涉及人民權利之限制，其授權之目的、內容及範圍應具體明確，始得謂與 授權明確性原則相符",
+        "法規命令之發布，應刊登政府公報或新聞紙；其屬法規命令而未依法定程序發布者，不生效力"
+      ],
+      "id": "115-08",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 9,
+      "question": "關於行政規則之性質及其效力，下列敘述何者正確？",
+      "options": [
+        "市政府訂定內部裁罰作業要點後，即可單獨以該要點作為增加人民罰鍰義務之法律依據",
+        "機關訂定內部公文分工作業規定，須經首長簽署並登載政府公報後，始對所屬人員發生效力",
+        "中央主管機關發布法令解釋行政規則後，該規則即與法律具有相同效力，並直接拘束全體人民",
+        "為行政機關認定事實及行使裁量之標準所訂，原則上拘束行政機關，但不直接對人民發生法規範效力"
+      ],
+      "id": "115-09",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 10,
+      "question": "交通警察甲於路口執行交通稽查勤務，見駕駛人乙有違規行為，甲當場以口頭告知乙其違規事實，並 依法製單舉發。試問，下列有關甲對乙所為行政處分成立要素之敘述，何者錯誤？",
+      "options": [
+        "甲之舉發行為須本於行政機關之職權為之，始能成立行政處分",
+        "甲對乙之舉發行為，若僅以口頭告知，尚不能認為行政處分已成立",
+        "甲對乙之舉發行為，須對外直接發生法律上之效果，始該當行政處分之要件",
+        "甲對乙之舉發行為，係甲本於單方公權力所為之意思表示，不待乙同意即得成立"
+      ],
+      "id": "115-10",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 11,
+      "question": "某法規規定，申請人符合全部法定要件者，主管機關「應」核發許可。甲已符合全部要件，主管機關另 於許可中附加「須捐款新臺幣5 萬元予指定基金」之條件，法律亦無相關授權。下列敘述何者最適當？",
+      "options": [
+        "羈束處分原則上可以任意附加附款",
+        "該附款可能違反行政程序法對附款中不當聯結之限制",
+        "只要行政機關認為有公益目的，附款即當然合法",
+        "附款是否合法與原處分是否為羈束處分無關"
+      ],
+      "id": "115-11",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 12,
+      "question": "甲申請政府創業補助，已據實提供全部應揭露之資訊，並無任何隱匿或虛偽陳述之情事。主管機關因 自身審查作業疏失，誤認甲符合補助要件，核准並發給補助款。甲信賴該補助處分之有效性，已將補 助款用於購置經營所需設備。其後主管機關發現甲實不符合法定要件，依法撤銷原授益處分。甲主張 其信賴補助處分並已支出資金，要求信賴補償。下列敘述何者最適當？",
+      "options": [
+        "甲之信賴原則上值得保護，得請求就其信賴所受之損失予以補償，惟其補償範圍不得超過甲因該處 分存續可得之利益",
+        "甲因客觀上受領非其應得之補助，縱無故意隱匿情事，其信賴仍當然不值得保護，不得請求任何補償",
+        "授益處分一經作成即永遠不得撤銷，主管機關不得撤銷原補助處分",
+        "主管機關只能提起民事訴訟請求返還不當得利，不能逕以行政處分撤銷原授益處分"
+      ],
+      "id": "115-12",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 13,
+      "question": "消防機關於豪雨期間派員實際執行抽除地下道積水。其法律性質最可能為何？",
+      "options": [
+        "行政處分",
+        "行政事實行為",
+        "法規命令",
+        "行政契約"
+      ],
+      "id": "115-13",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 14,
+      "question": "甲之一行為同時觸犯刑事法律，並違反行政法上義務規定。該刑事案件嗣經法院判決無罪確定，惟甲 之行為仍符合行政法上義務規定之裁處要件。依行政罰法之規定，下列敘述何者最為適當？",
+      "options": [
+        "行政機關因該行為曾進入刑事訴訟程序，即永久喪失裁處權，不得再對甲裁處行政罰",
+        "若符合行政法上義務規定之法定要件，行政機關仍得依該規定對甲裁處",
+        "須俟刑事法院將無罪判決改判為有罪確定後，行政機關始得對甲裁罰",
+        "行政機關僅得對甲裁處警告，不得裁處罰鍰"
+      ],
+      "id": "115-14",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 15,
+      "question": "主管機關依法命甲於一定期限內，拆除其違法設置且性質上得委由他人代為拆除之大型廣告物。甲逾 期仍未自行拆除，主管機關遂委託合格業者代為拆除該廣告物，並向甲收取所生之必要費用。依行政 執行法規定，此種行政執行方法應屬下列何者？",
+      "options": [
+        "直接強制",
+        "怠金",
+        "即時強制",
+        "代履行"
+      ],
+      "id": "115-15",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 16,
+      "question": "行政機關接獲山區土石流即將沖毀下游聚落之通報，因情況急迫，來不及對特定居民或土地所有人作 成命其忍受進入、遷讓或提供土地之行政處分，即逕行進入轄區內私人土地，構築堤防、疏濬水道以 保護下游居民生命財產安全。事後查明，該私人土地所有人並無任何過失或可歸責事由，卻因機關施 作工程而受有顯著超出一般人應忍受範圍之財產損失。關於此一事件之定性與後續救濟，下列敘述何 者最適當？",
+      "options": [
+        "行政機關未事先作成行政處分即進入他人土地，程序上已屬違法，土地所有人僅得提起國家賠償， 不生損失補償問題",
+        "此屬行政執行法上之即時強制，行政機關得於無下命處分之情形下逕行實施；若土地所有人因此受 有特別犧牲，且無可歸責事由，得依法請求損失補償",
+        "此屬代履行性質，因代履行係義務人本應履行卻由機關代為之，其費用轉嫁義務人負擔，與補償無 關，故不生補償問題",
+        "行政機關之措施既係為搶救下游居民之重大公共利益而為，基於公益優先原則，土地所有人縱受有 損失，亦不得向國家請求任何形式之補償"
+      ],
+      "id": "115-16",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 17,
+      "question": "承辦人甲於審理某補助案時，發現申請人乙為其已離婚之前配偶。依行政程序法規定，下列敘述何者 正確？",
+      "options": [
+        "甲應依法自行迴避，無庸等待乙或利害關係人提出申請",
+        "甲僅須主觀認為執行職務公正即可，毋庸迴避",
+        "甲之情形非法定應迴避事由，僅得由乙聲請迴避後，機關始得命其迴避",
+        "迴避制度僅適用於受理訴願或訴訟之公務員，一般行政處分承辦人無須迴避"
+      ],
+      "id": "115-17",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 18,
+      "question": "甲受主管機關裁處罰鍰，認原處分違法而提起訴願。受理訴願機關認訴願有理由，撤銷原處分並發回 原處分機關另為處分。依訴願法及最高行政法院實務見解，下列敘述何者正確？",
+      "options": [
+        "原處分既經訴願決定撤銷，原處分機關重為處分時，一律不得作成較原處分更不利益之處分",
+        "原處分機關重為更不利益之處分，並非當然違反不利益變更禁止原則；惟原處分如屬合法之有利裁 量，重為處分時不得改為較不利之裁量",
+        "訴願決定既已撤銷原處分，原處分機關重為處分時即不受任何限制，得自由提高原處分之不利益程度",
+        "受理訴願機關發回另為處分後，原處分機關僅得作成與原處分內容完全相同之處分"
+      ],
+      "id": "115-18",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 19,
+      "question": "關於行政訴訟法上確認訴訟之敘述，下列何者正確？",
+      "options": [
+        "確認公法上法律關係成立或不成立之訴訟，只須原告主觀上認為有確認之必要，即得提起，無須具 備即受確認判決之法律上利益",
+        "確認行政處分違法之訴訟，縱原告得提起撤銷訴訟，仍得自由選擇提起確認訴訟",
+        "確認行政處分無效之訴訟，縱原告得提起撤銷訴訟，仍不受補充性原則之限制，得逕行提起",
+        "確認行政處分無效之訴訟，原告得逕行向行政法院提起，無須先向原處分機關請求確認"
+      ],
+      "id": "115-19",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 20,
+      "question": "甲公司與某縣政府締結行政契約，約定甲公司完成道路養護工程後，縣政府應給付新臺幣 60 萬元之 工程款，惟縣政府屆期無正當理由拒絕給付。甲公司欲直接向行政法院請求判命縣政府履行契約上之 金錢給付義務。下列敘述何者正確？",
+      "options": [
+        "甲公司得提起一般給付訴訟，請求判命縣政府給付工程款",
+        "甲公司得先提起訴願，經訴願程序後，再提起撤銷訴訟",
+        "甲公司得提起確認行政契約無效之訴，以確認契約效力",
+        "甲公司得提起課予義務訴訟，請求命縣政府作成核發款項之行政處分"
+      ],
+      "id": "115-20",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 21,
+      "question": "某醫療法人所屬醫院有未經許可增建之建築，經主管機關通知限期補辦建造執照；因逾期未完成，主 管機關另發拆除通知。該法人不服，認為拆除可能影響醫療量能，欲循行政爭訟程序救濟。依行政訴 訟法規定，下列敘述何者正確？",
+      "options": [
+        "醫療法人只要對拆除通知提起行政訴訟，該拆除通知即當然停止執行",
+        "提起行政訴訟原則上不停止原處分之執行；如執行將發生難於回復之損害，且有急迫情事，符合其 他法定要件時，得聲請行政法院裁定停止執行",
+        "行政法院判斷是否停止執行時，只須審查原處分是否合法，不必考量損害是否難於回復",
+        "只要原處分可能造成營業收入減少，即屬法律所稱「難於回復之損害」，行政法院均應停止執行"
+      ],
+      "id": "115-21",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 22,
+      "question": "甲依法向主管機關申請核發許可，經否准並循序提起課予義務訴訟。依行政訴訟法及最高行政法院實 務見解，有關第一審行政法院之裁判方式，下列敘述何者最為適當？",
+      "options": [
+        "法院認原否准處分所載理由及證據不足，即不再審查甲是否具備法定許可要件，逕命主管機關依判 決之法律見解另為決定",
+        "法院認甲於裁判時已無實體法上之公法請求權，但原否准處分之作成程序違法，仍得命主管機關重 為決定，以排除原處分之程序瑕疵",
+        "法院認甲已具備全部法定許可要件，案件事證明確，且主管機關已無裁量空間，仍僅得命主管機關 依判決之法律見解另為決定，不得逕命作成甲所申請內容之行政處分",
+        "法院先以裁判時為準，審查甲所主張之公法上請求權是否存在；認其請求有理由，但案件事證尚未臻 明確且涉及主管機關之行政裁量，乃撤銷原否准處分及訴願決定，並命主管機關依判決之法律見解另 為決定"
+      ],
+      "id": "115-22",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 23,
+      "question": "某主管機關核發山坡地建造執照予建設公司，鄰近社區居民認為，該建築基地坡度及地盤穩定性存有 疑義，開發後可能造成崩塌、土石流等災害，危及社區居民生命、財產安全，遂對建造執照提起撤銷 訴訟。依行政訴訟法及最高行政法院實務見解，下列敘述何者錯誤？",
+      "options": [
+        "行政處分相對人以外之第三人，須主張其權利或法律上利益因該處分受損害，始得提起撤銷訴訟",
+        "第三人是否具有法律上利害關係，應就相關法規之保護對象、規範目的及規範效果等因素綜合判斷",
+        "法規雖兼具維護公共利益之目的，如依其整體規範內容可認亦有保障特定鄰人生命、財產安全之意 旨，該鄰人仍可能具有原告適格",
+        "只要相關法規具有維護公共安全之公益目的，任何附近居民均得僅以一般公益受影響為由，取得撤 銷訴訟之原告適格"
+      ],
+      "id": "115-23",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 24,
+      "question": "依現行法規定，關於法規命令與行政規則之區別，下列敘述何者錯誤？",
+      "options": [
+        "法規命令之適用對象主要為人民；行政規則之適用對象主要為公務員",
+        "法規命令涉及人民權益須送立法院審查；行政規則不需要送立法院審查",
+        "只有法規命令訂定前須將草案公告，並讓人民陳述意見；行政規則則不需要",
+        "原則上只有法規命令必須有明確授權；行政規則得逕依行政機關職權訂定之"
+      ],
+      "id": "115-24",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 25,
+      "question": "某直轄市政府依據文化資產保存法規定將其管轄區域內之特定自然特殊地形指定為自然地景之行為， 在行政法學上稱之為：",
+      "options": [
+        "行政契約",
+        "行政指導",
+        "行政執行",
+        "行政處分"
+      ],
+      "id": "115-25",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 26,
+      "question": "某國立大學生在傍晚遛狗時，不慎讓小狗跑到校門外道路，依據道路交通管理處罰條例規定，原本應處新 臺幣三百元到六百元罰鍰。惟警察人員鑑於其情節輕微，乃不予處罰，而改施以糾正或勸導，此等行為在 行政罰法上稱為：",
+      "options": [
+        "處罰法定原則",
+        "處罰有利原則",
+        "處罰便宜原則",
+        "處罰均衡原則"
+      ],
+      "id": "115-26",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 27,
+      "question": "參照我國現行實務見解，下列何者不是行政契約？",
+      "options": [
+        "依公路法規定，行政機關與受委託實施定期檢驗之汽車修理廠間簽訂協議",
+        "依土地徵收條例規定，需用土地人與土地所有權人達成價購之協議",
+        "依全民健康保險法規定，中央健康保險署與特約醫事服務機構間所簽訂之合約",
+        "依據大學法規定，國立大學與民間廠商就興建教學大樓所簽訂之建築契約"
+      ],
+      "id": "115-27",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 28,
+      "question": "下列關於行政法上信賴保護法律原則之敘述，何者正確？",
+      "options": [
+        "信賴保護僅適用於授益行政處分之撤銷或廢止，不適用其他行政行為",
+        "為實踐信賴保護原則，行政機關於行政法規公布後無論何種情形，均不得廢止",
+        "因公益之必要而廢止已公布之法規，原則上必須配套過渡期間或補償措施",
+        "人民即便因其本身不正確方法而獲致之授益處分，其信賴仍值得保護"
+      ],
+      "id": "115-28",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 29,
+      "question": "依據現行法規定，人民下列何種行為不得作為訴願之標的？",
+      "options": [
+        "對於人民依法之補助金申請所為拒絕之決定",
+        "主管機關依據道路交通管理處罰條例所為之裁罰",
+        "主管機關依據公務人員考績法對於公務員所為之免職處分",
+        "警察機關對於人民進行相關交通新制度之宣導"
+      ],
+      "id": "115-29",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 30,
+      "question": "值班警員甲於夜間凌晨一時許，突有乙女因為失戀並喝酒，於其值班台前哭訴，辱罵其男友丙為渣男， 並欲對丙另提起遺棄罪之告訴，甲警不堪乙哭鬧不止，乃出言制止乙女。乙女突對甲警拍桌訓斥，甲 警乃以其自備之辣椒噴霧向乙女臉部噴射二次。下列甲警或乙女之主張，何者正確？",
+      "options": [
+        "甲警使用自備之辣椒噴霧，朝乙女臉部噴灑，屬合法正當防衛之行為，不應處罰",
+        "乙女主張甲警使用違法警械，致其受傷，應同時負刑事及行政、民事責任",
+        "甲警因處置乙女報案失當，受記申誡一次，則乙女不得再向檢察機關為傷害罪刑事告發",
+        "行政法院於審理甲受申誡處分之合法性時，不得斟酌甲自備之密錄器影像"
+      ],
+      "id": "115-30",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 31,
+      "question": "依據行政法人法規定，下列何者並非行政法人之特徵？",
+      "options": [
+        "具有專業需求或須強化成本效益及經營效能者",
+        "不適合由政府機關推動，亦不宜交由民間辦理者",
+        "所涉公權力行使程度較低者",
+        "依據法律獨立行使職權，不受其他機關指揮監督之合議制機關"
+      ],
+      "id": "115-31",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 32,
+      "question": "警察甲、乙埋伏於高速公路兩側或高架橋上，使用測速照相機器，拍攝超速或不依車道線駕駛之車輛。 丙因任意變換車道且未打方向燈，被甲、乙拍攝並舉發之。下列丙之敘述何者正確？",
+      "options": [
+        "丙得主張甲、乙並未盡告知義務，故違反行政程序法上之誠實信用原則",
+        "丙抗辯測速照相僅能使用於犯罪偵查，不得使用於行政違規行為之證明",
+        "丙抗辯埋伏勤務並非行政警察之法定職權，違反依法行政原則",
+        "丙主張拍攝時間迄今已逾 1 個月，逾越舉發之法定期間"
+      ],
+      "id": "115-32",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 33,
+      "question": "警察甲夜間開槍射擊在百貨公司脫逃之通緝犯，不慎因跳彈誤傷路人乙，致乙受有槍傷死亡。下列敘 述何者正確？",
+      "options": [
+        "甲之行為合法，故其服務機關不負損失補償責任",
+        "乙之繼承人丙得依國家賠償法規定，請求損失補償",
+        "乙之繼承人丙不得先經協議程序，向甲所屬警察局，請求補償",
+        "乙之繼承人丙得依警械使用條例規定，請求特別犧牲之損失補償"
+      ],
+      "id": "115-33",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 34,
+      "question": "中央警察大學或臺灣警察專科學校與入學就讀學生簽訂之公費行政契約，依行政程序法之規定，下列敘 述何者正確？",
+      "options": [
+        "公費生行政契約屬和解契約",
+        "公費生行政契約不得約定學校得逕受強制執行",
+        "契約生效期間，臺灣發生重大災變，學校仍不得單方終止該契約",
+        "契約條款未明文者，於性質相似時，仍得準用民法債編之相關規定"
+      ],
+      "id": "115-34",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 35,
+      "question": "A 部會之法規命令規定，若廠商三次無正當理由不配合A 部要求，參加軍品採購投標，得註銷該廠商原 受發給之軍品合格製造廠商證書。此種「註銷證書」，依行政程序法規定，在性質上係屬於何種類型之行 政處分？",
+      "options": [
+        "撤銷處分",
+        "廢止處分",
+        "混合撤銷及廢止雙重性質之處分",
+        "行政處分之附款"
+      ],
+      "id": "115-35",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 36,
+      "question": "警察為執行酒駕及毒駕臨檢業務，於易生肇事道路上夜間設置臨檢站，查證駕駛人身分及是否有喝酒 或吸毒開車情事。下列敘述何者最正確？",
+      "options": [
+        "命駕駛人受臨檢之整體行為，性質上為行政事實行為",
+        "毒駕檢查權限，不需要法律明文規定，只需有行政命令即可",
+        "駕駛人如不願配合檢查，警察一律不得強制其離車",
+        "駕駛人對檢查行為，得向警察人員當場表示異議，以求救濟"
+      ],
+      "id": "115-36",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 37,
+      "question": "A 市計畫自 2026 年 9 月 1 日起於各公立小學全面實施免費營養午餐計畫，並嚴禁學童父母自備午餐 以取代免費午餐。下列敘述何者正確？",
+      "options": [
+        "營養午餐計畫沒有拘束效力，故學童家長可以不予理會，仍得送餐供子女食用",
+        "營養午餐計畫僅是 A 市之「勸告」或「建議」，是一種行政指導之事實行為",
+        "學童家長明確表示其子女因宗教因素一定要吃素食，學校營養午餐無法配合時，家長仍可以自備素食 午餐",
+        "免費營養午餐計畫之法律性質為行政計畫中之給付型計畫"
+      ],
+      "id": "115-37",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 38,
+      "question": "行政機關調查裁罰案件時，卷內同時存在對當事人有利與不利之證據。下列何者最符合行政程序法之 規定？",
+      "options": [
+        "僅調查對當事人不利之證據即可",
+        "僅依當事人主動提出之資料判斷，不得自行調查",
+        "應依職權調查證據，對當事人有利及不利事項一律注意",
+        "由原檢舉人決定何種證據具有證明力"
+      ],
+      "id": "115-38",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 39,
+      "question": "甲為中央乙部會之公務員，因主張曾受單位主管之職場霸凌，請乙部會依法調查。惟調查程序尚未終 結，中央主管機關便透過函釋，在未經修法的情況下變更其解釋，認甲之案件管轄權須移交丙市政府 之勞工局管轄。依行政程序法規定，下列敘述何者正確？",
+      "options": [
+        "仍應由受理在先之乙部會管轄",
+        "應依行政程序法第 18 條規定，由乙部會移送丙市政府管轄",
+        "乙部會及丙市政府均有管轄權",
+        "由行政院決定本件之管轄權"
+      ],
+      "id": "115-39",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 40,
+      "question": "甲警察於道路上攔停乙騎士，認乙違規紅燈右轉，並擬依道路交通管理處罰條例開單舉發乙之違規行 為。下列敘述何者正確？",
+      "options": [
+        "乙騎士得向甲主張依行政程序法第 102 條規定，應給予其陳述意見之機會",
+        "甲警察得裁量以口頭告誡取代舉發行為",
+        "乙騎士主張丙、丁亦違規紅燈右轉，為何沒有舉發，故甲違反平等原則",
+        "甲警察之舉發性質上屬於行政處分"
+      ],
+      "id": "115-40",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 41,
+      "question": "下列有關行政程序法送達規定之敘述，何者正確？",
+      "options": [
+        "送達，由行政機關依申請為之",
+        "送達僅能交由郵政機關代為送達",
+        "送達於應受送達人之住居所、事務所或營業所時，因不獲會晤，應即寄存送達",
+        "對不特定人為送達時，得以公告代替送達"
+      ],
+      "id": "115-41",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 42,
+      "question": "都市更新案件，其聽證之舉行，除都更條例有特別規定者外，應適用行政程序法之聽證規定為之。下 列有關聽證規定，何者正確？",
+      "options": [
+        "舉行聽證前，得通知當事人及其他已知之利害關係人",
+        "聽證期日及場所變更，須有正當理由，且得以公告為之",
+        "聽證主持人得指定機關副首長為之",
+        "聽證應公開並以書面為之"
+      ],
+      "id": "115-42",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 43,
+      "question": "中央法規標準法第 7 條訂定之職權命令，依行政程序法規定，下列敘述何者正確？",
+      "options": [
+        "若有侵害人民權利或利益者，仍得無限期適用",
+        "職權命令一律自民國92 年 1 月1 日起，完全失其效力",
+        "逾期失效的效力係指溯及且自始無效",
+        "職權命令應於一定期間內改以法律規定或明列法律授權依據"
+      ],
+      "id": "115-43",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 44,
+      "question": "依行政罰法規定，關於行政罰之責任條件，下列敘述何者正確？",
+      "options": [
+        "違反行政法上義務之行為，非出於故意或過失者，不予處罰",
+        "違反行政法上義務者，不問有無故意或過失，均應處罰",
+        "行政罰以行為人出於故意者為限，始得處罰，過失行為一律不予處罰",
+        "行政罰之科處，不以行為人主觀上具備故意或過失等責任條件為必要"
+      ],
+      "id": "115-44",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 45,
+      "question": "下列行政行為，何者不適用行政程序法之程序規定？",
+      "options": [
+        "申請變更身分證上之性別認定",
+        "申請核發護照行為",
+        "收容流浪犬之行為",
+        "警察依法院核發之搜索票搜索酒吧之行為"
+      ],
+      "id": "115-45",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 46,
+      "question": "甲將其所有座落於乙市之住宅區一樓房屋，出租於丙從事美容護膚行業。出租後甲疏於管理注意，一 日被警方查獲丙從事色情行業，乙市政府依行政罰法及最高行政法院之決議，應對誰開罰違反分區使 用之行政責任？",
+      "options": [
+        "甲",
+        "丙",
+        "甲或丙均可",
+        "併罰甲與丙"
+      ],
+      "id": "115-46",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 47,
+      "question": "下列何者非屬公務人員行政中立法適用或準用之人員？",
+      "options": [
+        "臺北市政府薦任第九職等科長",
+        "任用為警察官前，於警察局接受實務訓練者",
+        "臺電公司技術員",
+        "高雄市立某國中兼任行政職務之教師"
+      ],
+      "id": "115-47",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 48,
+      "question": "人民打 1999 市民專線，建議市政府能減少劃設道路紅線及減少人民檢舉之違規事件。此種撥打電話 之行為，係屬下列何種性質？",
+      "options": [
+        "行政指導",
+        "行政處分之申請",
+        "行政契約之要約",
+        "行政陳情"
+      ],
+      "id": "115-48",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 49,
+      "question": "甲因遭情感受騙，人財兩空，遂獨自登上高樓，意圖跳樓自殺，乙警於巡邏勤務中，發現甲舉止怪異 哭泣不已，乃尾隨其後，於大樓屋頂上，迅行制服甲，阻止其行為。此種制服甲之措施，其性質為何？",
+      "options": [
+        "直接強制",
+        "間接強制",
+        "即時強制",
+        "代履行"
+      ],
+      "id": "115-49",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    },
+    {
+      "number": 50,
+      "question": "甲購買乙市某大樓頂樓，頂樓上已存有違法之加蓋，影響公共安全與逃生。乙市遂以通知命甲三十日 內自行拆除違建，甲認為加蓋並非其所為，且亦無妨害逃生之虞。下列敘述何者正確？",
+      "options": [
+        "乙市通知甲自行拆除函為觀念通知",
+        "甲對該通知得直接提起行政訴訟",
+        "行政訴訟繫屬前，甲得依法聲請假執行",
+        "甲應先經訴願程序，並申請執行停止"
+      ],
+      "id": "115-50",
+      "year": "115",
+      "subject": "行政法",
+      "exam": "警察人員升官等考試",
+      "answer": null,
+      "source": "MOEX PDF",
+      "explanation": "本批檔案未提供標準答案，暫不判分。"
+    }
+  ]
+};function flat(){return Object.values(data).flat()}
+let deck=flat(), filtered=deck, cur=0, chosen=null;function loadState(){try{return JSON.parse(localStorage.getItem('pocketAdminLawState')||'{}')}catch{return {}}}
+let state=Object.assign({seen:[],wrong:[],favorites:[]},loadState());
+const yearSelect=document.getElementById('yearSelect'); yearSelect.innerHTML='<option value="all">全部年度</option>'+Object.keys(data).sort().map(y=>`<option value="${y}">${y} 年</option>`).join('');
+function persist(){localStorage.setItem('pocketAdminLawState',JSON.stringify(state));updateStats()}
+function updateStats(){document.getElementById('total').textContent=filtered.length;document.getElementById('seenCount').textContent=state.seen.length;document.getElementById('wrongCount').textContent=state.wrong.length}
+function answerText(ans){return Array.isArray(ans)?ans.join('、'):ans}
+function current(){return filtered[cur]}
+function draw(index=cur){if(!filtered.length){document.getElementById('question').textContent='此年度沒有題目';document.getElementById('options').innerHTML='';return}cur=(index+filtered.length)%filtered.length;chosen=null;const q=current();document.getElementById('qid').textContent=`${q.year} 年｜第 ${q.number} 題`;document.getElementById('topic').textContent=q.subject;document.getElementById('question').textContent=q.question;let options=document.getElementById('options');options.innerHTML='';q.options.forEach((opt,i)=>{let b=document.createElement('button');b.className='opt';b.textContent='ABCD'[i]+'. '+opt;b.onclick=()=>mark(i);options.appendChild(b)});document.getElementById('reveal').classList.remove('show');document.getElementById('answer').textContent='';document.getElementById('explain').textContent='';refreshButtons();updateStats()}
+function mark(i){const q=current();if(chosen!==null)return;chosen=i;state.seen.push(q.id);state.seen=[...new Set(state.seen)];let ans=q.answer;let correct=Array.isArray(ans)?ans.map(a=>'ABCD'.indexOf(a)):ans?'ABCD'.indexOf(ans):-1;document.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(correct.includes(j))b.classList.add('correct');if(ans&&j===i&&!correct.includes(j))b.classList.add('wrong')});document.getElementById('reveal').classList.add('show');document.getElementById('answer').textContent=ans?`官方答案：${answerText(ans)}`:'官方答案：尚未取得，暫不判分';document.getElementById('explain').textContent=ans?`題目來源：官方試題。${q.explanation||'逐題解析尚待整理，請依題目與法規複習。'}`:'此年度已收到試題，但本批資料未附官方答案。';if(ans&&!correct.includes(i)){state.wrong.push(q.id);state.wrong=[...new Set(state.wrong)]}persist();refreshButtons()}
+function refreshButtons(){let q=current();document.getElementById('favBtn').textContent=state.favorites.includes(q.id)?'★ 已收藏':'☆ 收藏';document.getElementById('wrongBtn').textContent=state.wrong.includes(q.id)?'✓ 已標記錯題':'標記錯題'}
+function filterYear(){let y=yearSelect.value;filtered=y==='all'?deck:deck.filter(q=>q.year===y);cur=0;draw(0)}
+yearSelect.onchange=filterYear;document.getElementById('next').onclick=()=>draw(cur+1);document.getElementById('prev').onclick=()=>draw(cur-1);document.getElementById('random').onclick=()=>draw(Math.floor(Math.random()*filtered.length));document.getElementById('favBtn').onclick=()=>{let id=current().id;state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];persist();refreshButtons()};document.getElementById('wrongBtn').onclick=()=>{let id=current().id;state.wrong=state.wrong.includes(id)?state.wrong.filter(x=>x!==id):[...state.wrong,id];persist();refreshButtons()};
+function showList(ids,title){let panel=document.getElementById('listPanel');panel.classList.add('show');document.getElementById('listTitle').textContent=title;let items=ids.map(id=>deck.find(q=>q.id===id)).filter(Boolean);let div=document.getElementById('listItems');div.innerHTML='';items.forEach(q=>{let b=document.createElement('button');b.className='opt';b.style.marginTop='8px';b.textContent=`${q.year}年 Q${q.number}｜${q.question}`;b.onclick=()=>{let y=yearSelect.value;if(y!=='all'&&y!==q.year)yearSelect.value=q.year;filtered=yearSelect.value==='all'?deck:deck.filter(x=>x.year===yearSelect.value);draw(filtered.findIndex(x=>x.id===q.id));panel.classList.remove('show')};div.appendChild(b)});if(!items.length)div.textContent='目前沒有紀錄。'}
+document.getElementById('wrongReview').onclick=()=>showList(state.wrong,'錯題複習');document.getElementById('bottomWrong').onclick=()=>showList(state.wrong,'錯題複習');document.getElementById('favReview').onclick=()=>showList(state.favorites,'收藏題目');document.getElementById('bottomFav').onclick=()=>showList(state.favorites,'收藏題目');document.getElementById('closeList').onclick=()=>document.getElementById('listPanel').classList.remove('show');document.getElementById('statsBtn').onclick=()=>alert(`行政法題庫共 ${filtered.length} 題\n已答：${state.seen.length}\n錯題：${state.wrong.length}\n收藏：${state.favorites.length}`);function reset(){if(confirm('清除本機答題、收藏及錯題紀錄？')){state={seen:[],wrong:[],favorites:[]};persist();draw(0)}}document.getElementById('reset').onclick=reset;document.getElementById('resetBottom').onclick=reset;
+draw(0);
 </script></body></html>
